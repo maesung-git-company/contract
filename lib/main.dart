@@ -18,7 +18,7 @@ Future<void> main() async {
   );
 
   final prefs = await SharedPreferences.getInstance();
-  prefs.remove("login_id");  // todo remove
+  // prefs.remove("login_id");  // todo remove
 
   int? loginId = prefs.getInt('login_id');
   Global.userData.id = loginId;

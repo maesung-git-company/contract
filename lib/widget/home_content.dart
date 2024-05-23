@@ -12,7 +12,7 @@ class HomeContent extends StatelessWidget {
     return Container(
       width: 250,
       height: 250,
-      color: Colors.blue,
+      //color: Colors.blue, // todo remove
       child: StepCounter(),
     );
   }
