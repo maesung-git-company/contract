@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/global.dart';
-import '../home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,11 +50,13 @@ class _LoginPageState extends State<LoginPage> {
 
     return MaterialApp(
         home: Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (loginId == null)
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              
+              SizedBox(width: 100, height: 350,),
+
+              if (loginId == null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
@@ -66,12 +67,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                ElevatedButton(
+
+              SizedBox( width: 100, height: 50, ),
+
+              OutlinedButton(
                   onPressed: onLogin,
-                  child: const Text('Submit'),
+                  child: const Text('확인', 
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
-              ],
-            ),
+            ],
           ),
         )
     );

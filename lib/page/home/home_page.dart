@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../structure/class/activity_data.dart';
 import '../../widget/home_content.dart';
 
 class HomePage extends StatelessWidget {
