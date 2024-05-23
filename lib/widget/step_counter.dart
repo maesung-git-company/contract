@@ -14,7 +14,8 @@ class StepCounter extends StatefulWidget {
 class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _status = '?', _steps = '?';
+  String _status = '?', _displayedText = '?';
+  // todo server manager class, wifi check, visual
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _StepCounterState extends State<StepCounter> {
   void onStepCount(StepCount event) {
     Global.activityData.step += 1;
     setState(() {
-      _steps = Global.activityData.step.toString();
+      _displayedText = Global.activityData.step.toString();
     });
   }
 
@@ -43,7 +44,7 @@ class _StepCounterState extends State<StepCounter> {
 
   void onStepCountError(error) {
     setState(() {
-      _steps = 'no step';
+      _displayedText = 'no step';
     });
   }
 
@@ -63,8 +64,8 @@ class _StepCounterState extends State<StepCounter> {
   Widget build(BuildContext context) {
     return Center(
         child: Text(
-          _steps,
-          style: TextStyle(fontSize: 30),
+          _displayedText,
+          style: TextStyle(fontSize: 60),
         )
     );
   }
