@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/global.dart';
+import '../../structure/class/user_data.dart';
 import '../home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,40 +13,39 @@ class LoginPage extends StatefulWidget {
 
 
 class _LoginPageState extends State<LoginPage> {
-  // Obtain shared preferences.
   final TextEditingController _loginIdController = TextEditingController();
+  late UniqueKey _uniqueKey;
   String _textMsg = "";
 
-  Future<void> saveLoginId(int loginId) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('login_id', loginId);
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
-  onLoginAttempt() async { // todo login session
-    final supabase = Supabase.instance.client;
+  onLoginAttempt() async {
     int userId = int.parse(_loginIdController.text);
 
     if (userId > 32767) {
-      displayErrorMessage("정상적인 숫자를 써주세요..");
+      displayErrorMessageFor(
+        "정상적인 숫자를 써주세요..",
+        5000
+      );
       return;
     }
 
-    try {
-      final data = await supabase
-          .from('user_data')
-          .select()
-          .eq('id', userId)
-          .single();
-
-      onLoginSuccess();
-    }
-    catch (e) {
+    Global.serverManager.retrieveUserData(userId).then((value) {
+      onLoginSuccess(value);
+    }).catchError((error) {
       onLoginFail();
-    }
+    });
   }
 
-  onLoginSuccess() {
-    saveLoginId(int.parse(_loginIdController.text));
+  onLoginSuccess(UserData userData) {
+    Global.prefs.setInt('user_id', userData.id);
+    Global.userData = userData;
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => HomePage()),
@@ -56,7 +53,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   onLoginFail() {
-    displayErrorMessage("존재하는 아이디를 써주세요.. 에러라 판단되면 2216을 찾으시오..");
+    displayErrorMessageFor(
+      "존재하는 아이디를 써주세요.. 에러라 판단되면 2216을 찾으시오..",
+      5000
+    );
   }
 
   displayErrorMessage(String msg) {
@@ -65,22 +65,21 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  removeErrorMessageAfter(int milliseconds) {  // todo not done yet, handle future thing
+  displayErrorMessageFor(String msg, int milliseconds) {
+    displayErrorMessage(msg);
+
+    UniqueKey tmp = UniqueKey();
+    _uniqueKey = tmp;
+
     Future.delayed(
       Duration(milliseconds: milliseconds), () {
-        displayErrorMessage("");
+        if (tmp == _uniqueKey) { displayErrorMessage(""); }
       }
     );
   }
 
-  displayErrorMessageFor(String msg, int milliseconds) {
-    displayErrorMessage(msg);
-
-  }
   @override
   Widget build(BuildContext context) {
-    int? loginId = Global.userData.id;
-
     return MaterialApp(
         home: Scaffold(
           backgroundColor: Colors.white,

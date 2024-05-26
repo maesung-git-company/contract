@@ -1,3 +1,5 @@
 class UserData {
-  int? id;
+  late int id;
+  late int steps;
+  late int minutesActive;
 }
