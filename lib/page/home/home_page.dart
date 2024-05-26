@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
-
-import '../../widget/home_content.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
   @override
-  Widget build(BuildContext context) {  // todo login, init global
+  Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'TitleMain',
       home: Scaffold(
@@ -14,7 +12,7 @@ class HomePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  HomeContent()
+                  StepCounter()
                 ],
               )
           )
