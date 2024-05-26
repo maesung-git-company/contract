@@ -3,22 +3,32 @@ import 'package:contract/page/login/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'core/global.dart';
 import 'core/manager/server/interface_server_manager.dart';
 import 'core/manager/server/server_manager_supabase.dart';
+
+// todo warn: wifi
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await overallInit();
 
   debug(); // todo remove debug
-  // todo make accounts
+
+  /* todo I made accounts, now to :
+  add users_id in subgroups, add subgroups and greatgroups belong group,
+  ensure solidarity between group/user and group.
+   */
+
 
   int? userId = Global.prefs.getInt('user_id');
   if (userId != null) {
     Global.userData = await Global.serverManager.retrieveUserData(userId);
   }
+
+  grantPermission();
 
   runApp(Contract());
 }
@@ -40,6 +50,10 @@ class Contract extends StatefulWidget {
 
   @override
   State<Contract> createState() => _ContractState();
+}
+
+Future<void> grantPermission() async {
+  await Permission.activityRecognition.request();
 }
 
 class _ContractState extends State<Contract> {

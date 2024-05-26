@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../../core/global.dart';
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   onLoginAttempt() async {
     int userId = int.parse(_loginIdController.text);
 
-    if (userId > 32767) {
+    if (userId > pow(2, (4 * 8 - 1)) - 1) {
       displayErrorMessageFor(
         "정상적인 숫자를 써주세요..",
         5000
