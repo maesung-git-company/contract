@@ -9,19 +9,22 @@ import 'core/global.dart';
 import 'core/manager/server/interface_server_manager.dart';
 import 'core/manager/server/server_manager_supabase.dart';
 
+/* todo list:
+  - add users_id in subgroups, add subgroups and greatgroups belong group,
+  ensure solidarity between group/user and group.
+  - visual : first to work
+  - background work ?
+  - sum : working on
+  - anti cheat ?
+ */
+
 // todo warn: wifi
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await overallInit();
 
-  debug(); // todo remove debug
-
-  /* todo I made accounts, now to :
-  add users_id in subgroups, add subgroups and greatgroups belong group,
-  ensure solidarity between group/user and group.
-   */
-
+  // debug(); // todo remove debug
 
   int? userId = Global.prefs.getInt('user_id');
   if (userId != null) {
