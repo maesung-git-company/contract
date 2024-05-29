@@ -18,11 +18,6 @@ class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _displayedText = '?';
-  /* todo list
-  - visual : first to work
-  - sum : working on
-  - anti cheat
-   */
 
   @override
   void setState(fn) {
