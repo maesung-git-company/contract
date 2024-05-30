@@ -12,7 +12,8 @@ class ClassStatPage extends StatefulWidget {
   State<ClassStatPage> createState() => _ClassStatPageState();
 }
 
-class _ClassStatPageState extends State<ClassStatPage> {
+class _ClassStatPageState extends State<ClassStatPage> { // todo A4 학사모 누르면 뜨는 페이지인데 지금 너무하게 못생겼으니 부탁함, 홈페이지로 돌아가는 버튼도 추가 요망.
+
   Future<List<ClassPreviewBar>> getClasses() async {
     final sm = Global.serverManager;
     List<ClassPreviewBar> res = [];
@@ -45,7 +46,6 @@ class _ClassStatPageState extends State<ClassStatPage> {
     return FutureBuilder(
       future: getClasses(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
         if (snapshot.hasData == false) {
           return CircularProgressIndicator();
         }

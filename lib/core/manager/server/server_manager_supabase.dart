@@ -5,7 +5,6 @@ import 'package:contract/structure/class/class_data.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../global.dart';
 
@@ -25,6 +24,17 @@ class ServerManagerSupabase implements ServerManagerI {
   }
 
   @override
+  Future<Map<String, dynamic>> getUserDataRaw(int userId) async {
+    final data = await _supabase
+        .from('user_data')
+        .select()
+        .eq('id', userId)
+        .single();
+
+    return data;
+  }
+
+  @override
   Future<UserData> retrieveUserData(int userId) async {
     UserData userData = UserData();
 
@@ -33,8 +43,25 @@ class ServerManagerSupabase implements ServerManagerI {
     userData.id = userId;
     userData.steps = data["steps"];
     userData.minutesActive = data["minutes_active"];
+    userData.belongClassesUuid
+      = List<String>.from(data['belong_classes_uuid'] as List);
 
     return userData;
+  }
+
+  @override
+  Future<List<ClassData>> getBelongClasses(int userId) async {
+    final data = await retrieveUserData(userId);
+    final belongClassesUuid = data.belongClassesUuid;
+
+    final List<ClassData> res = [];
+
+    for (final uuid in belongClassesUuid) {
+      final cd = await retrieveClassData(uuid);
+      res.add(cd);
+    }
+
+    return res;
   }
 
   @override
@@ -56,14 +83,30 @@ class ServerManagerSupabase implements ServerManagerI {
   }
 
   @override
-  Future<DateTime> getClassLatestSumWhen(Uuid id) async {
-    final data = await getClassDataRaw(id);
-    return data['latest_sum_when'];
+  Future<Map<String, dynamic>> getClassDataRaw(String uuid) async {
+    final data = await _supabase
+        .from('class')
+        .select()
+        .eq('id', uuid)
+        .single();
+
+    return data;
   }
 
   @override
-  Future<List<UserData>> getUserDatasOfClass(Uuid id) async {
-    final cd = await getClassDataRaw(id);
+  Future<ClassData> retrieveClassData(String uuid) async {
+    final cd = await getClassDataRaw(uuid);
+    ClassData res = ClassData();
+
+    res.uuid = uuid;
+    res.name = cd['name'];
+
+    return res;
+  }
+
+  @override
+  Future<List<UserData>> getUserDatasOfClass(String uuid) async {
+    final cd = await getClassDataRaw(uuid);
     List<UserData> res = [];
 
     for (final id in cd['users_id']) {
@@ -74,70 +117,25 @@ class ServerManagerSupabase implements ServerManagerI {
   }
 
   @override
-  Future<ClassData> retrieveClassData(Uuid id) async {
-    print('--------------------------------');
-    final cd = await getClassDataRaw(id);
-    ClassData res = ClassData();
-
-    res.id = id;
-    res.name = cd['name'];
-
-    return res;
+  Future<DateTime> getClassLatestSumWhen(String uuid) async {
+    final data = await getClassDataRaw(uuid);
+    return DateTime.parse(data['latest_sum_when']);
   }
 
   @override
-  Future<List<ClassData>> getBelongClasses(int userId) async {
-    final data = await getUserDataRaw(userId);
-    final belongClasses = data['belong_classes_id'];
-    final List<ClassData> res = [];
-
-    if (belongClasses == null) return res;
-
-    for (var id in belongClasses) {
-      var a = await retrieveClassData(id); // todo this s**t not works lol
-      res.add(a);
-    }
-    print(res);
-    print("-----------res---------");
-    return res;
-  }
-
-  @override
-  Future<int> getLatestClassTotalSteps(Uuid id) async {
-    final data = await getClassDataRaw(id);
+  Future<int> getLatestClassTotalSteps(String uuid) async {
+    final data = await getClassDataRaw(uuid);
     return data['latest_sum_of_steps'];
   }
 
   @override
-  Future<void> updateClassLatestTotalSteps(Uuid id, int totalSteps) async {
+  Future<void> updateClassLatestTotalSteps(String uuid, int totalSteps) async {
     await _supabase
       .from('class')
       .update({
         'latest_sum_of_steps': totalSteps,
-        'latest_sum_when': DateTime.now()
+        'latest_sum_when': DateTime.now().toString()
       })
-      .eq('id', id);
-  }
-
-  @override
-  Future<Map<String, dynamic>> getClassDataRaw(Uuid id) async {
-    final data = await _supabase
-        .from('class')
-        .select()
-        .eq('id', id)
-        .single();
-
-    return data;
-  }
-
-  @override
-  Future<Map<String, dynamic>> getUserDataRaw(int userId) async {
-    final data = await _supabase
-        .from('user_data')
-        .select()
-        .eq('id', userId)
-        .single();
-
-    return data;
+      .eq('id', uuid);
   }
 }

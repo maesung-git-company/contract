@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ClassPreviewBar extends StatefulWidget {
+class ClassPreviewBar extends StatefulWidget {  // todo onclick handling
   final String title;
-  int steps;
+  final int steps;
 
   ClassPreviewBar({super.key, required this.title, required this.steps});
 
@@ -19,7 +18,7 @@ class _ClassPreviewBarState extends State<ClassPreviewBar> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  // todo A1 메인화면에서 학사모 누르면 뜨는 화면에서 자신이 소속된 반이 쭉 뜨게 해놓음. 그 각각 반의 bar인데 좀 꾸며주셈
     return Column(
       children: [
         SizedBox(
