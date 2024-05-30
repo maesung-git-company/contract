@@ -14,11 +14,20 @@ import 'core/manager/server/server_manager_supabase.dart';
   ensure solidarity between group/user and group.
   - visual : first to work
   - background work ?
-  - sum : working on
+  - wifi
+  - sum : 90% done
   - anti cheat ?
+  - import by package ?
  */
 
-// todo warn: wifi
+/* todo list for jeery:
+  - A1
+  - A2
+  - A3
+  - A4
+  - A5
+  - A6
+ */
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

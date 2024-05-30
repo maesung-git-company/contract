@@ -90,7 +90,7 @@ class _StepCounterState extends State<StepCounter> {
       child: Center(
           child: Text(
             _displayedText,
-            style: TextStyle(fontSize: 60),
+            style: TextStyle(fontSize: 60),  // todo A3 폰트 크기를 메시지마다 다르게 설정해주셈
           )
       ),
     );
