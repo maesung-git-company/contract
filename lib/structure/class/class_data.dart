@@ -11,7 +11,7 @@ class ClassData implements OrganizationI {
   late final String name;
 
   @override
-  Future<int> getTotalStep() async { // todo should I put this thing in server manager?
+  Future<int> getTotalStep() async {
     final sm = Global.serverManager;
 
     final DateTime dt = await sm.getClassLatestSumWhen(uuid);

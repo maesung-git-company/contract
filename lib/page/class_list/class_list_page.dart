@@ -5,14 +5,14 @@ import '../../structure/class/class_data.dart';
 import '../../widget/class_preview_bar.dart';
 import 'package:contract/core/global.dart';
 
-class ClassStatPage extends StatefulWidget {
-  const ClassStatPage({super.key});
+class ClassListPage extends StatefulWidget {
+  const ClassListPage({super.key});
 
   @override
-  State<ClassStatPage> createState() => _ClassStatPageState();
+  State<ClassListPage> createState() => _ClassListPageState();
 }
 
-class _ClassStatPageState extends State<ClassStatPage> { // todo A4 학사모 누르면 뜨는 페이지인데 지금 너무하게 못생겼으니 부탁함, 홈페이지로 돌아가는 버튼도 추가 요망.
+class _ClassListPageState extends State<ClassListPage> { // todo A4 학사모 누르면 뜨는 페이지인데 지금 너무하게 못생겼으니 부탁함, 홈페이지로 돌아가는 버튼도 추가 요망.
 
   Future<List<ClassPreviewBar>> getClasses() async {
     final sm = Global.serverManager;

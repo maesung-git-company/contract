@@ -10,14 +10,15 @@ import 'core/manager/server/interface_server_manager.dart';
 import 'core/manager/server/server_manager_supabase.dart';
 
 /* todo list:
-  - add users_id in subgroups, add subgroups and greatgroups belong group,
-  ensure solidarity between group/user and group.
-  - visual : first to work
+  - class preview bar onclick, curr
+  - school db
   - background work ?
   - wifi
   - sum : 90% done
   - anti cheat ?
   - import by package ?
+  - add group adder python files to project
+  - visual : first to work - on jeery
  */
 
 /* todo list for jeery:

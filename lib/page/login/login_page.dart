@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Future.delayed(
       Duration(milliseconds: milliseconds), () {
-        if (tmp == _uniqueKey) { displayErrorMessage(""); }
+        if (tmp == _uniqueKey) displayErrorMessage("");
       }
     );
   }

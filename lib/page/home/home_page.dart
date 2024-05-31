@@ -1,4 +1,4 @@
-import 'package:contract/page/stats/class_stat_page.dart';
+import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +10,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void sendClassNav() {
+  void sendClassListPageNav() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ClassStatPage()),
+      MaterialPageRoute(builder: (context) => ClassListPage()),
     );
   }
 
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                     child: Stack(
                         children: [
                           OutlinedButton( // todo A2 학사모 모양 버튼인데 이거 클래스로 분리할 수 있으면 해주고 크기 키우거나 해서 잘보이게 해주셈
-                            onPressed: sendClassNav,
+                            onPressed: sendClassListPageNav,
                             style: ButtonStyle(),
                             child: Icon(
                               Icons.school_sharp,

@@ -17,7 +17,7 @@ class StepCounter extends StatefulWidget {
 class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _displayedText = '?';
+  String _displayedText = '';
 
   @override
   void setState(fn) {
@@ -31,6 +31,7 @@ class _StepCounterState extends State<StepCounter> {
     super.initState();
     initPlatformState();
     initTimer();
+    _displayedText = Global.userData!.steps.toString();
   }
 
   void initPlatformState() {
