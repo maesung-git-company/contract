@@ -86,9 +86,24 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          body: Container(margin: EdgeInsets.all(75),
+          body: Container(margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
             child: Column(
               children: [
+                Text("Title", 
+                  style: TextStyle(
+                    fontSize: 50, 
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black, 
+                  ),
+                ),
+                Text(
+                  "subtitle",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xff757575)
+                  ),
+                ),
                 SizedBox(height: 250,),
                 TextField(
                   controller: _loginIdController,
@@ -109,4 +124,3 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
-
