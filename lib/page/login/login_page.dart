@@ -86,7 +86,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          body: Container(margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
+          backgroundColor: Colors.white,
+          body: Container(
+            margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
             child: Column(
               children: [
                 Text("Title", 
