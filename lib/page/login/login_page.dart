@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _loginIdController = TextEditingController();
   late UniqueKey _uniqueKey;
@@ -80,39 +79,34 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+
+
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(
-            children: [
-              SizedBox(width: 100, height: 350,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TextField(
+          body: Container(margin: EdgeInsets.all(75),
+            child: Column(
+              children: [
+                SizedBox(height: 250,),
+                TextField(
                   controller: _loginIdController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: '본인의 연도학번 을 입력해주세요',
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter your ID',
+                    hintText: 'ex)242511',
                   ),
                 ),
-              ),
-              SizedBox( width: 100, height: 50, ),
-              OutlinedButton(
-                  onPressed: onLoginAttempt,
-                  child: const Text('확인',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              Text(
-                _textMsg,
-                style: TextStyle(color: Colors.red),
-              ),
-            ],
+                SizedBox(height: 50,),
+                OutlinedButton(onPressed: onLoginAttempt, child: Text("Confirm")),
+                Text(_textMsg,)
+              ],
+            ),
           ),
         )
-    );
+      );
+    }
   }
-}
 
