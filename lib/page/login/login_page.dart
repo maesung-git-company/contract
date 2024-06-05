@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _loginIdController = TextEditingController();
+  final TextEditingController loginIdController = TextEditingController();
   late UniqueKey _uniqueKey;
   String _textMsg = "";
 
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   onLoginAttempt() async {
-    int userId = int.parse(_loginIdController.text);
+    int userId = int.parse(loginIdController.text);
 
     if (userId > pow(2, (4 * 8 - 1)) - 1) {
       displayErrorMessageFor(
@@ -107,15 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 250,),
-                TextField(
-                  controller: _loginIdController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter your ID',
-                    hintText: 'ex)242511',
-                  ),
-                ),
+                LoginTextField(loginIdController: loginIdController),
                 SizedBox(height: 50,),
                 OutlinedButton(onPressed: onLoginAttempt, child: Text("Confirm")),
                 Text(_textMsg,)
@@ -126,3 +118,27 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
+
+class LoginTextField extends StatefulWidget {
+  final loginIdController;
+  
+  const LoginTextField({super.key, this.loginIdController});
+
+  @override
+  State<LoginTextField> createState() => _LoginTextFieldState();
+}
+
+class _LoginTextFieldState extends State<LoginTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: widget.loginIdController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Enter your ID',
+        hintText: 'ex)242511',
+      ),
+    );
+  }
+}
