@@ -34,7 +34,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await overallInit();
 
-  //debug(); // todo remove debug
+  debug(); // todo remove debug
 
   int? userId = Global.prefs.getInt('user_id');
   if (userId != null) {
