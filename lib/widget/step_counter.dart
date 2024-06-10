@@ -85,15 +85,9 @@ class _StepCounterState extends State<StepCounter> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 250,
-      height: 250,
-      child: Center(
-          child: Text(
-            _displayedText,
-            style: TextStyle(fontSize: 60),  // todo A3 폰트 크기를 메시지마다 다르게 설정해주셈
-          )
-      ),
+    return Text(
+      _displayedText,
+      style: TextStyle(fontSize: 60),  // todo A3 폰트 크기를 메시지마다 다르게 설정해주셈
     );
   }
 }

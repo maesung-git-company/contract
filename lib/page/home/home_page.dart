@@ -1,4 +1,5 @@
 import 'package:contract/page/class_list/class_list_page.dart';
+import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,8 +24,8 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              sendClassListPageNav();
-            }, icon: Icon(Icons.menu)),
+              Navigator.pop(context);
+            }, icon: Icon(Icons.arrow_back_ios_outlined)),
           backgroundColor: Colors.white,
           title: const Text('Step Counter'),
         ),
@@ -75,8 +76,7 @@ class _StepIndicatorState extends State<StepIndicator> {
               children: [
                 Text('Current Steps',
                  style: TextStyle(fontSize: 16,)),
-                Text('0',
-                 style: TextStyle(fontSize: 32)),
+                StepCounter()
               ],
             ),
           ),

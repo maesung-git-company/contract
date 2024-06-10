@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     Global.prefs.setInt('user_id', userData.id);
     Global.userData = userData;
 
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => HomePage()),
     );
