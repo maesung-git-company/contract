@@ -88,21 +88,8 @@ class _StepIndicatorState extends State<StepIndicator> {
       width: double.infinity,
       height: double.infinity,
       color: Colors.black.withOpacity(0.3),
-      child: Column(
-        children: [
-          Text('Current Steps', 
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              )
-            ),
-          Text('{0}', 
-            style: TextStyle(
-             color: Colors.white,
-             fontSize: 24,
-           )
-         ),
-        ] 
+      child: Center(
+        child: Text("1"),
       ),
     );
   }
