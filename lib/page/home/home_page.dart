@@ -2,6 +2,9 @@ import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/global.dart';
+import '../../structure/class/user_data.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -15,6 +18,15 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(builder: (context) => ClassListPage()),
     );
+  }
+
+  Future<List<UserData>> getClassStatsSorted() async {
+    final sm = Global.serverManager;
+    final cls = await sm.getBelongClasses(Global.userData!.id);
+    List<UserData> res = await sm.getUserDatasOfClass(cls[0].uuid);  // todo 다른 클래스 선택기능
+    res.sort((a, b) => b.steps.compareTo(a.steps));
+
+    return res;
   }
 
   @override
