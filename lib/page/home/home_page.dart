@@ -1,5 +1,4 @@
 import 'package:contract/page/class_list/class_list_page.dart';
-import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,28 +21,34 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             }, icon: Icon(Icons.arrow_back_ios_outlined)),
           backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          shape: Border(
+            bottom: BorderSide(
+              color: Colors.grey.shade500,
+            ),
+          ),
           title: const Text('Step Counter'),
         ),
-        body: Container(
+        body: SizedBox(
           child: Column(
             children: [
               Flexible(
                 flex: 3, 
-                child: Container(
-                  color: Colors.white,
+                child: SizedBox(
                   child: Center(
                     child: StepIndicator(),
                 ),
               )),
               Flexible(
                 flex: 7, 
-                child: Container(
-                  color: Colors.green,
+                child: SizedBox(
                   child: const Center(
                     child: ClassIndicator(),
                 ),
@@ -67,20 +72,25 @@ class _StepIndicatorState extends State<StepIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 20, 20, 30),
-      child: Row(
+      margin: EdgeInsets.fromLTRB(25, 25, 25, 25),
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.black.withOpacity(0.3),
+      child: Column(
         children: [
-          Container(
-            alignment: Alignment.topLeft,
-            child: Column(
-              children: [
-                Text('Current Steps',
-                 style: TextStyle(fontSize: 16,)),
-                StepCounter()
-              ],
+          Text('Current Steps', 
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              )
             ),
-          ),
-        ],
+          Text('{0}', 
+            style: TextStyle(
+             color: Colors.white,
+             fontSize: 24,
+           )
+         ),
+        ] 
       ),
     );
   }
