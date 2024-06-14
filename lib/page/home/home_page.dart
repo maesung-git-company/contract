@@ -87,9 +87,15 @@ class _StepIndicatorState extends State<StepIndicator> {
       margin: EdgeInsets.fromLTRB(25, 25, 25, 25),
       width: double.infinity,
       height: double.infinity,
-      color: Colors.black.withOpacity(0.3),
-      child: Center(
-        child: Text("1"),
+      color: Colors.black.withOpacity(1),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Current Steps', 
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+          gradientText(),
+        ]
       ),
     );
   }
@@ -111,4 +117,9 @@ class _ClassIndicatorState extends State<ClassIndicator> {
       child: const Text('Class Indicator'),
     );
   }
+}
+
+Widget gradientText() {
+   final Shader linearGradientShader = LinearGradient(colors: [Color(0xfff7b500), Color(0xff6dd400)]).createShader(Rect.fromCenter(center: Offset(0.1, 0.5), width: 50, height: 50));
+   return Text('1557', style: TextStyle(foreground: Paint()..shader = linearGradientShader, fontSize: 54));
 }
