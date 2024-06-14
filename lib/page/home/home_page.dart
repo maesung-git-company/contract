@@ -1,8 +1,18 @@
+import 'dart:ui';
+
 import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/global.dart';
 import '../../structure/class/user_data.dart';
+
+
+// Color Codes 
+// #2E3532
+// #7E9181
+// #A0AAB2
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +43,6 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -48,7 +57,8 @@ class _HomePageState extends State<HomePage> {
           ),
           title: const Text('Step Counter'),
         ),
-        body: SizedBox(
+        body: Container(
+          color: Colors.white,
           child: Column(
             children: [
               Flexible(
@@ -73,6 +83,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+
 class StepIndicator extends StatefulWidget {
   const StepIndicator({super.key});
 
@@ -84,17 +95,16 @@ class _StepIndicatorState extends State<StepIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(25, 25, 25, 25),
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.black.withOpacity(1),
+      margin: EdgeInsets.fromLTRB(25, 0, 25, 25),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Current Steps', 
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white),
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 66, 66, 66)),
           ),
-          gradientText(),
+          Text('1557',
+            style: TextStyle(fontSize: 64, fontWeight: FontWeight.w700, color: Colors.black),
+          )
         ]
       ),
     );
@@ -114,12 +124,20 @@ class _ClassIndicatorState extends State<ClassIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Text('Class Indicator'),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300, width: 2),
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(25),
+      ),
+      margin: EdgeInsets.fromLTRB(25, 0, 25, 25),
+      width: double.infinity,
+      height: double.infinity,
     );
   }
 }
 
-Widget gradientText() {
-   final Shader linearGradientShader = LinearGradient(colors: [Color(0xfff7b500), Color(0xff6dd400)]).createShader(Rect.fromCenter(center: Offset(0.1, 0.5), width: 50, height: 50));
-   return Text('1557', style: TextStyle(foreground: Paint()..shader = linearGradientShader, fontSize: 54));
-}
+
+
+final Shader linearGradient = LinearGradient(
+  colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
+).createShader(Rect.fromLTWH(0.0, 0.0, 500.0, 70.0));
