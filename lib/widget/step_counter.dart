@@ -69,9 +69,11 @@ class _StepCounterState extends State<StepCounter> {
     });
   }
 
-  void onStepCountError(error) {
+   void onStepCountError(error) {
     setState(() {
-      _displayedText = "권한을 확인해 주세요..";
+      _displayedText = "#";
+
+
     });
   }
 
