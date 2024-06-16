@@ -100,10 +100,10 @@ class _StepIndicatorState extends State<StepIndicator> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Current Steps', 
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 66, 66, 66)),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.black),
           ),
           Text('1557',
-            style: TextStyle(fontSize: 64, fontWeight: FontWeight.w700, color: Colors.black),
+            style: TextStyle(fontSize: 64, fontWeight: FontWeight.w700, foreground: Paint()..shader = linearGradient),
           )
         ]
       ),
@@ -123,21 +123,58 @@ class ClassIndicator extends StatefulWidget {
 class _ClassIndicatorState extends State<ClassIndicator> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300, width: 2),
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      margin: EdgeInsets.fromLTRB(25, 0, 25, 25),
-      width: double.infinity,
-      height: double.infinity,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        margin: EdgeInsets.all(25),
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  width: 2,
+                  color: Colors.grey.withOpacity(0.80)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white.withOpacity(0.85),
+                    Colors.white.withOpacity(0.75),
+                  ]
+                ),  
+              ),
+            ),
+            Center(
+              child: _buildList(),
+            )
+          ],
+        ),
+      )
     );
   }
 }
 
+ListTile _title(String title, String subtitle) => ListTile(
+  title: Text(title, style: TextStyle(color: Colors.black, fontSize: 24),),
+  subtitle: Text(subtitle, style: TextStyle(color: Colors.black, fontSize: 16),),
+); 
 
+Widget _buildList() => ListView(
+  children: [
+    ClassListPage(),
+    ClassListPage(),
+    ClassListPage(),
+  ],
+); 
 
 final Shader linearGradient = LinearGradient(
-  colors: <Color>[Color(0xffDA44bb), Color(0xff8921aa)],
-).createShader(Rect.fromLTWH(0.0, 0.0, 500.0, 70.0));
+  colors: <Color>[Color(0xff6FDA44), Color(0xff27B166)],
+).createShader(Rect.fromLTWH(0.0, 0.0, 200, 70.0));
