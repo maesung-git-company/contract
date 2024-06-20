@@ -1,8 +1,8 @@
-import 'dart:ui';
 
 import 'package:contract/page/class_list/class_list_page.dart';
+import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
-
+import 'package:contract/widget/info_box.dart';
 import '../../core/global.dart';
 import '../../structure/class/user_data.dart';
 
@@ -43,10 +43,15 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back_ios_outlined)),
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: Icon(Icons.menu));
+            }
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
@@ -57,24 +62,81 @@ class _HomePageState extends State<HomePage> {
           ),
           title: const Text('Step Counter'),
         ),
+
+        /*----------------------------------------------------------*/
+
+        drawer: Drawer(
+          backgroundColor: Colors.grey.shade200,
+          child: ListView(
+            padding: EdgeInsets.fromLTRB(28, 0, 28, 0),
+            children: [
+              SizedBox(
+                height: 64,
+                child: DrawerHeader(
+                  child: Text('DrawerHeader'),
+                ),
+              ),
+              ListTile(
+                title: Text('Leader board', style: TextStyle(color: Colors.black, fontSize: 16),),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('Setting', style: TextStyle(color: Colors.black, fontSize: 16),),
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text('About', style: TextStyle(color: Colors.black, fontSize: 16),),
+                onTap: () {},
+              )
+            ]
+          )
+        ),
+
+        /*----------------------------------------------------------*/
+        
         body: Container(
-          color: Colors.white,
+          color: Colors.grey.shade100,
           child: Column(
             children: [
               Flexible(
-                flex: 3, 
+                flex: 35, 
                 child: SizedBox(
-                  child: Center(
-                    child: StepIndicator(),
-                ),
-              )),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: 6, 
+                        child: MainBox(
+                          theWidth: double.infinity,
+                          theHeight: double.infinity,
+                          theChild: Center(
+                            child: StepIndicator(),
+                          )
+                        )
+                      ),
+                      Flexible(
+                        flex: 4,
+                        child: MainBox(
+                          theWidth: double.infinity,
+                          theHeight: double.infinity,
+                          theChild: Center(
+                            child: Text('hello'),
+                          )
+                        )
+                      )
+                    ],
+                  ),
+                )
+              ),
               Flexible(
-                flex: 7, 
-                child: SizedBox(
-                  child: const Center(
-                    child: ClassIndicator(),
-                ),
-              )),
+                flex: 65, 
+                child: MainBox(
+                  theWidth: double.infinity,
+                  theHeight: double.infinity,
+                  theChild: Center(
+                    child: Text('hello'),
+                  ),
+                )
+              ),
             ],
           ),
         ),
@@ -95,16 +157,14 @@ class _StepIndicatorState extends State<StepIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(25, 0, 25, 25),
+      margin: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Current Steps', 
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.black),
           ),
-          Text('1557',
-            style: TextStyle(fontSize: 64, fontWeight: FontWeight.w700, foreground: Paint()..shader = linearGradient),
-          )
+          StepCounter()
         ]
       ),
     );
@@ -113,6 +173,7 @@ class _StepIndicatorState extends State<StepIndicator> {
 
 /*--------------------------------------------------------------------*/
 
+/*
 class ClassIndicator extends StatefulWidget {
   const ClassIndicator({super.key});
 
@@ -161,6 +222,7 @@ class _ClassIndicatorState extends State<ClassIndicator> {
     );
   }
 }
+*/
 
 ListTile _title(String title, String subtitle) => ListTile(
   title: Text(title, style: TextStyle(color: Colors.black, fontSize: 24),),
@@ -169,12 +231,25 @@ ListTile _title(String title, String subtitle) => ListTile(
 
 Widget _buildList() => ListView(
   children: [
-    ClassListPage(),
-    ClassListPage(),
-    ClassListPage(),
+      
   ],
 ); 
 
 final Shader linearGradient = LinearGradient(
   colors: <Color>[Color(0xff6FDA44), Color(0xff27B166)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200, 70.0));
+
+class theDrawer extends StatefulWidget {
+  const theDrawer({super.key});
+
+  @override
+  State<theDrawer> createState() => _theDrawerState();
+}
+
+class _theDrawerState extends State<theDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
