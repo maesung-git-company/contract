@@ -1,6 +1,5 @@
 
 import 'package:contract/page/class_list/class_list_page.dart';
-import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:contract/widget/info_box.dart';
 import '../../core/global.dart';
@@ -156,16 +155,47 @@ class StepIndicator extends StatefulWidget {
 class _StepIndicatorState extends State<StepIndicator> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
+    return SizedBox(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Current Steps', 
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, color: Colors.black),
+          Flexible(
+            flex: 2,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Current Steps', style: TextStyle(fontSize: 16, color: Colors.black)),
+              ),
+            )
           ),
-          StepCounter()
-        ]
+          Flexible(
+            flex: 5,
+            child: Row(
+              children: [
+                Flexible(
+                  flex: 7,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text('15570',style: TextStyle(fontSize: 72, foreground: Paint()..shader = linearGradient)),
+                    ),
+                  )
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Container(color: Colors.red,),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            flex: 3,
+            child: Container(
+              color: Colors.green,
+            ),
+          )
+        ],
       ),
     );
   }
