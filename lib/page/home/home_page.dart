@@ -159,40 +159,35 @@ class _StepIndicatorState extends State<StepIndicator> {
       child: Column(
         children: [
           Flexible(
-            flex: 2,
+            flex: 15,
             child: Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
               child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Current Steps', style: TextStyle(fontSize: 16, color: Colors.black)),
+                alignment: Alignment.bottomLeft,
+                child: Text('Current Steps', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w100)),
               ),
             )
           ),
           Flexible(
-            flex: 5,
-            child: Row(
-              children: [
-                Flexible(
-                  flex: 7,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Text('15570',style: TextStyle(fontSize: 72, foreground: Paint()..shader = linearGradient)),
-                    ),
-                  )
+            flex: 35,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                child: Align(
+                 alignment: Alignment.topLeft,
+                  child: Text('15570',style: TextStyle(
+                   fontSize: 70, 
+                  foreground: Paint()..shader = linearGradient
+                   ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
-                Flexible(
-                  flex: 3,
-                  child: Container(color: Colors.red,),
-                ),
-              ],
+              ),
             ),
           ),
           Flexible(
-            flex: 3,
+            flex: 60,
             child: Container(
-              color: Colors.green,
+              
             ),
           )
         ],
@@ -266,7 +261,7 @@ Widget _buildList() => ListView(
 ); 
 
 final Shader linearGradient = LinearGradient(
-  colors: <Color>[Color(0xff6FDA44), Color(0xff27B166)],
+  colors: <Color>[Color.fromARGB(255, 68, 88, 218), Color.fromARGB(255, 103, 39, 177)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200, 70.0));
 
 class theDrawer extends StatefulWidget {
