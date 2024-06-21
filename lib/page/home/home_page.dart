@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:contract/widget/info_box.dart';
 import '../../core/global.dart';
 import '../../structure/class/user_data.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 
 // Color Codes 
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                           theWidth: double.infinity,
                           theHeight: double.infinity,
                           theChild: Center(
-                            child: Text('hello'),
+                            child: StepProgress(),
                           )
                         )
                       )
@@ -155,42 +156,35 @@ class StepIndicator extends StatefulWidget {
 class _StepIndicatorState extends State<StepIndicator> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.all(10),
       child: Column(
         children: [
-          Flexible(
-            flex: 15,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('Current Steps', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w100)),
+          SizedBox(
+            height: 20,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text('Current steps',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w100
+                )
               ),
-            )
+            ),
           ),
-          Flexible(
-            flex: 35,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                child: Align(
-                 alignment: Alignment.topLeft,
-                  child: Text('15570',style: TextStyle(
-                   fontSize: 70, 
-                  foreground: Paint()..shader = linearGradient
-                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+          SizedBox(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                '1557', // todo 내가 싸줄꼐
+                style: TextStyle(
+                  fontSize: 64,
+                  foreground: Paint()..shader = linearGradient,
                 ),
               ),
             ),
           ),
-          Flexible(
-            flex: 60,
-            child: Container(
-              
-            ),
-          )
-        ],
+        ]
       ),
     );
   }
@@ -278,3 +272,23 @@ class _theDrawerState extends State<theDrawer> {
   }
 }
 
+class StepProgress extends StatefulWidget {
+  const StepProgress({super.key});
+
+  @override
+  State<StepProgress> createState() => _StepProgressState();
+}
+
+class _StepProgressState extends State<StepProgress> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: CircularPercentIndicator(
+        radius: 80.0,
+        lineWidth: 15.0,
+        percent: 0.7, // todo 걸음수/10000 해 "줘"
+        center: Text('hehe'),
+      )
+    );
+  }
+}
