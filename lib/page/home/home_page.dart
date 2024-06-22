@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:contract/widget/info_box.dart';
@@ -280,13 +282,25 @@ class StepProgress extends StatefulWidget {
 }
 
 class _StepProgressState extends State<StepProgress> {
+  double _displayedProgress = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _displayedProgress = Global.userData!.steps.toDouble() / 10000;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: CircularPercentIndicator(
         radius: 80.0,
         lineWidth: 15.0,
-        percent: 0.7, // todo 걸음수/10000 해 "줘"
+        percent: _displayedProgress,
         center: Text('hehe'),
       )
     );
