@@ -101,37 +101,69 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Flexible(
-                flex: 35, 
-                child: SizedBox(
-                  child: Row(
+                flex: 20, 
+                child: MainBox(
+                  theBottom: 0,
+                  theTop: 10,
+                  theWidth: double.infinity,
+                  theHeight: double.infinity,
+                  theChild: Column(
                     children: [
-                      Flexible(
-                        flex: 6, 
-                        child: MainBox(
-                          theWidth: double.infinity,
-                          theHeight: double.infinity,
-                          theChild: Center(
-                            child: StepIndicator(),
-                          )
-                        )
+                      Container(
+                        margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                        height: 20,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text('Current steps',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w100
+                            )
+                          ),
+                        ),
                       ),
-                      Flexible(
-                        flex: 4,
-                        child: MainBox(
-                          theWidth: double.infinity,
-                          theHeight: double.infinity,
-                          theChild: Center(
-                            child: StepProgress(),
-                          )
-                        )
+                      Container(
+                        height: 64,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text('10000',
+                            style: TextStyle(
+                              fontSize: 56,
+                            )
+                          ),
+                        ),
+                      ),
+                      Container( //Align 해라
+                        child: Row(
+                          children: [
+                            IndicatorBar(),
+                            IndicatorBar(),
+                            IndicatorBar(),
+                            IndicatorBar()
+                          ],
+                        ),
                       )
-                    ],
+                    ]
                   ),
                 )
               ),
               Flexible(
-                flex: 65, 
+                flex: 20, 
                 child: MainBox(
+                  theBottom: 10,
+                  theTop: 10,
+                  theWidth: double.infinity,
+                  theHeight: double.infinity,
+                  theChild: Center(
+                    child: Text('bye'),
+                  ),
+                )
+              ),
+              Flexible(
+                flex: 60, 
+                child: MainBox(
+                  theBottom: 10,
+                  theTop: 0,
                   theWidth: double.infinity,
                   theHeight: double.infinity,
                   theChild: Center(
