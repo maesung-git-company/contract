@@ -37,13 +37,47 @@ class IndicatorBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      width: 80,
-      height: 25,
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 1, style: BorderStyle.solid, color: Colors.grey.shade500),
+      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+      child: Row(
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+            width: 100,
+            height: 15,
+            decoration: BoxDecoration(
+              color: Color(0xff31781c),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+            width: 100,
+            height: 15,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+            width: 100,
+            height: 15,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+            width: 100,
+            height: 15,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          
+        ],
       ),
     );
   }

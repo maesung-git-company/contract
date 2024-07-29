@@ -1,20 +1,17 @@
-
 import 'dart:async';
 
 import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:contract/widget/info_box.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/global.dart';
 import '../../structure/class/user_data.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-
-// Color Codes 
+// Color Codes
 // #2E3532
 // #7E9181
 // #A0AAB2
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,7 +31,8 @@ class _HomePageState extends State<HomePage> {
   Future<List<UserData>> getClassStatsSorted() async {
     final sm = Global.serverManager;
     final cls = await sm.getBelongClasses(Global.userData!.id);
-    List<UserData> res = await sm.getUserDatasOfClass(cls[0].uuid);  // todo 다른 클래스 선택기능
+    List<UserData> res =
+        await sm.getUserDatasOfClass(cls[0].uuid); // todo 다른 클래스 선택기능
     res.sort((a, b) => b.steps.compareTo(a.steps));
 
     return res;
@@ -45,15 +43,13 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: Builder(
-            builder: (context) {
-              return IconButton(
+          leading: Builder(builder: (context) {
+            return IconButton(
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
                 icon: Icon(Icons.menu));
-            }
-          ),
+          }),
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
@@ -68,10 +64,9 @@ class _HomePageState extends State<HomePage> {
         /*----------------------------------------------------------*/
 
         drawer: Drawer(
-          backgroundColor: Colors.grey.shade200,
-          child: ListView(
-            padding: EdgeInsets.fromLTRB(28, 0, 28, 0),
-            children: [
+            backgroundColor: Colors.grey.shade200,
+            child:
+                ListView(padding: EdgeInsets.fromLTRB(28, 0, 28, 0), children: [
               SizedBox(
                 height: 64,
                 child: DrawerHeader(
@@ -79,98 +74,131 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListTile(
-                title: Text('Leader board', style: TextStyle(color: Colors.black, fontSize: 16),),
+                title: Text(
+                  'Leader board',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
                 onTap: () {},
               ),
               ListTile(
-                title: Text('Setting', style: TextStyle(color: Colors.black, fontSize: 16),),
+                title: Text(
+                  'Setting',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
                 onTap: () {},
               ),
               ListTile(
-                title: Text('About', style: TextStyle(color: Colors.black, fontSize: 16),),
+                title: Text(
+                  'About',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
                 onTap: () {},
               )
-            ]
-          )
-        ),
+            ])),
 
         /*----------------------------------------------------------*/
-        
+
         body: Container(
           color: Colors.grey.shade100,
           child: Column(
             children: [
               Flexible(
-                flex: 20, 
-                child: MainBox(
-                  theBottom: 0,
-                  theTop: 10,
-                  theWidth: double.infinity,
-                  theHeight: double.infinity,
-                  theChild: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                        height: 20,
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text('Current steps',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w100
-                            )
+                  flex: 20,
+                  child: MainBox(
+                    theBottom: 0,
+                    theTop: 10,
+                    theWidth: double.infinity,
+                    theHeight: double.infinity,
+                    theChild: Row(
+                      children: [
+                        Flexible(
+                          flex: 50,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(25, 25, 25, 5),
+                                height: 54,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('6974',
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                )),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(35, 5, 35, 25),
+                              height: 30,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text('/ 10000 steps',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                    fontSize: 22,
+                                  )),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                      Container(
-                        height: 64,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text('10000',
-                            style: TextStyle(
-                              fontSize: 56,
-                            )
+                        Flexible(
+                          flex: 50,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(65, 50, 5, 0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    width: 70,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Color(0xff389050),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(55, 0, 15, 20),
+                                height: 25,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: new LinearPercentIndicator(
+                                    width: 150,
+                                    backgroundColor: Colors.grey.shade500,
+                                    lineHeight: 15,
+                                    barRadius: Radius.circular(10),                                    
+                                  ),
+                                )
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      Container( //Align 해라
-                        child: Row(
-                          children: [
-                            IndicatorBar(),
-                            IndicatorBar(),
-                            IndicatorBar(),
-                            IndicatorBar()
-                          ],
-                        ),
-                      )
-                    ]
-                  ),
-                )
-              ),
+                        )
+                    ]),
+                  )),
               Flexible(
-                flex: 20, 
-                child: MainBox(
-                  theBottom: 10,
-                  theTop: 10,
-                  theWidth: double.infinity,
-                  theHeight: double.infinity,
-                  theChild: Center(
-                    child: Text('bye'),
-                  ),
-                )
-              ),
+                  flex: 20,
+                  child: MainBox(
+                    theBottom: 10,
+                    theTop: 10,
+                    theWidth: double.infinity,
+                    theHeight: double.infinity,
+                    theChild: Center(
+                      child: Text('bye'),
+                    ),
+                  )),
               Flexible(
-                flex: 60, 
-                child: MainBox(
-                  theBottom: 10,
-                  theTop: 0,
-                  theWidth: double.infinity,
-                  theHeight: double.infinity,
-                  theChild: Center(
-                    child: Text('hello'),
-                  ),
-                )
-              ),
+                  flex: 60,
+                  child: MainBox(
+                    theBottom: 10,
+                    theTop: 0,
+                    theWidth: double.infinity,
+                    theHeight: double.infinity,
+                    theChild: Center(
+                      child: Text('hello'),
+                    ),
+                  )),
             ],
           ),
         ),
@@ -178,7 +206,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 class StepIndicator extends StatefulWidget {
   const StepIndicator({super.key});
@@ -192,34 +219,28 @@ class _StepIndicatorState extends State<StepIndicator> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 20,
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text('Current steps',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w100
-                )
+      child: Column(children: [
+        SizedBox(
+          height: 20,
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Text('Current steps',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w100)),
+          ),
+        ),
+        SizedBox(
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              '1557', // todo 내가 싸줄꼐
+              style: TextStyle(
+                fontSize: 64,
+                foreground: Paint()..shader = linearGradient,
               ),
             ),
           ),
-          SizedBox(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                '1557', // todo 내가 싸줄꼐
-                style: TextStyle(
-                  fontSize: 64,
-                  foreground: Paint()..shader = linearGradient,
-                ),
-              ),
-            ),
-          ),
-        ]
-      ),
+        ),
+      ]),
     );
   }
 }
@@ -278,18 +299,25 @@ class _ClassIndicatorState extends State<ClassIndicator> {
 */
 
 ListTile _title(String title, String subtitle) => ListTile(
-  title: Text(title, style: TextStyle(color: Colors.black, fontSize: 24),),
-  subtitle: Text(subtitle, style: TextStyle(color: Colors.black, fontSize: 16),),
-); 
+      title: Text(
+        title,
+        style: TextStyle(color: Colors.black, fontSize: 24),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(color: Colors.black, fontSize: 16),
+      ),
+    );
 
 Widget _buildList() => ListView(
-  children: [
-      
-  ],
-); 
+      children: [],
+    );
 
 final Shader linearGradient = LinearGradient(
-  colors: <Color>[Color.fromARGB(255, 68, 88, 218), Color.fromARGB(255, 103, 39, 177)],
+  colors: <Color>[
+    Color.fromARGB(255, 68, 88, 218),
+    Color.fromARGB(255, 103, 39, 177)
+  ],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200, 70.0));
 
 class theDrawer extends StatefulWidget {
@@ -329,12 +357,11 @@ class _StepProgressState extends State<StepProgress> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: CircularPercentIndicator(
-        radius: 80.0,
-        lineWidth: 15.0,
-        percent: _displayedProgress,
-        center: Text('hehe'),
-      )
-    );
+        child: CircularPercentIndicator(
+      radius: 80.0,
+      lineWidth: 15.0,
+      percent: _displayedProgress,
+      center: Text('hehe'),
+    ));
   }
 }
