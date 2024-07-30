@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.centerLeft,
                                 child: Text('/ 10000 steps',
                                   style: TextStyle(
-                                    color: Colors.grey.shade500,
+                                    color: Colors.grey.shade600,
                                     fontSize: 22,
                                   )),
                                 ),
@@ -146,27 +146,38 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.fromLTRB(65, 50, 5, 0),
+                                margin: EdgeInsets.fromLTRB(70, 50, 5, 0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
-                                    width: 70,
+                                    width: 50,
                                     height: 25,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: Color(0xff389050),
+                                      color: Color(0xffbae5c6),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('{0}%',
+                                        style: TextStyle(
+                                          color: Color(0xff2f7642),
+                                          fontSize: 15,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.fromLTRB(55, 0, 15, 20),
-                                height: 25,
+                                margin: EdgeInsets.fromLTRB(60, 5, 0, 20),
+                                height: 20,
                                 child: Align(
                                   alignment: Alignment.bottomRight,
                                   child: new LinearPercentIndicator(
                                     width: 150,
-                                    backgroundColor: Colors.grey.shade500,
+                                    backgroundColor: Colors.grey.shade400,
+                                    percent: 0.69,
+                                    progressColor: Color(0xff53a96a),
                                     lineHeight: 15,
                                     barRadius: Radius.circular(10),                                    
                                   ),
@@ -185,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                     theWidth: double.infinity,
                     theHeight: double.infinity,
                     theChild: Center(
-                      child: Text('bye'),
+                      child: Text('국민 여러분 좆됬습니다.'),
                     ),
                   )),
               Flexible(
@@ -196,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                     theWidth: double.infinity,
                     theHeight: double.infinity,
                     theChild: Center(
-                      child: Text('hello'),
+                      child: Text('라면 사십쇼 방독면 챙기십쇼.'),
                     ),
                   )),
             ],
