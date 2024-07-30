@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                 height: 20,
                                 child: Align(
                                   alignment: Alignment.bottomRight,
-                                  child: new LinearPercentIndicator(
+                                  child: LinearPercentIndicator(
                                     width: 150,
                                     backgroundColor: Colors.grey.shade400,
                                     percent: 0.69,
