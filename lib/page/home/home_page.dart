@@ -152,19 +152,43 @@ class _HomePageState extends State<HomePage> {
                 ),
               Flexible(
                 flex: 20,
-                child: Text('ad'),
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        width: 1,
+                        style: BorderStyle.solid, color: Colors.grey.shade500
+                    ),
                   ),
+                ),
+              ),
               Flexible(
                   flex: 60,
-                  child: Text('ge')
-              ),
-            ],
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 1,
+                        style: BorderStyle.solid, color: Colors.grey.shade500
+                      )
+                    )
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
-}
 
 class StepIndicator extends StatefulWidget {
   const StepIndicator({super.key});
