@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:contract/page/class_list/class_list_page.dart';
+import 'package:contract/widget/step_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:contract/widget/info_box.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -46,9 +47,9 @@ class _HomePageState extends State<HomePage> {
           leading: Builder(builder: (context) {
             return IconButton(
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Navigator.pop(context);
                 },
-                icon: Icon(Icons.menu));
+                icon: Icon(Icons.arrow_back_ios_new));
           }),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -63,39 +64,6 @@ class _HomePageState extends State<HomePage> {
 
         /*----------------------------------------------------------*/
 
-        drawer: Drawer(
-            backgroundColor: Colors.grey.shade200,
-            child:
-                ListView(padding: EdgeInsets.fromLTRB(28, 0, 28, 0), children: [
-              SizedBox(
-                height: 64,
-                child: DrawerHeader(
-                  child: Text('DrawerHeader'),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  'Leader board',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  'Setting',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  'About',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
-                onTap: () {},
-              )
-            ])),
-
         /*----------------------------------------------------------*/
 
         body: Container(
@@ -104,49 +72,48 @@ class _HomePageState extends State<HomePage> {
             children: [
               Flexible(
                   flex: 20,
-                  child: MainBox(
-                    theBottom: 0,
-                    theTop: 10,
-                    theWidth: double.infinity,
-                    theHeight: double.infinity,
-                    theChild: Row(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 1, style: BorderStyle.solid, color: Colors.grey.shade500),
+                    ),
+                    child: Row(
                       children: [
                         Flexible(
-                          flex: 50,
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(25, 25, 25, 5),
-                                height: 54,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text('6974',
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                )),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(35, 5, 35, 25),
-                              height: 30,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text('/ 10000 steps',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 22,
-                                  )),
+                            flex: 50,
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(25, 25, 25, 5),
+                                  height: 54,
+                                  child: StepCounter(),
                                 ),
-                              )
-                            ],
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(35, 5, 35, 25),
+                                  height: 30,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('/ 10000 steps',
+                                     style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 22
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
                           ),
-                        ),
                         Flexible(
                           flex: 50,
                           child: Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.fromLTRB(70, 50, 5, 0),
+                                margin: EdgeInsets.fromLTRB(70, 55, 0, 0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
@@ -154,13 +121,13 @@ class _HomePageState extends State<HomePage> {
                                     height: 25,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: Color(0xffbae5c6),
+                                      color: Color(0xffbae5c6)
                                     ),
                                     child: Align(
                                       alignment: Alignment.center,
                                       child: Text('{0}%',
                                         style: TextStyle(
-                                          color: Color(0xff2f7642),
+                                          color: Color(0xff53a96a),
                                           fontSize: 15,
                                         ),
                                       ),
@@ -173,43 +140,24 @@ class _HomePageState extends State<HomePage> {
                                 height: 20,
                                 child: Align(
                                   alignment: Alignment.bottomRight,
-                                  child: LinearPercentIndicator(
-                                    width: 150,
-                                    backgroundColor: Colors.grey.shade400,
-                                    percent: 0.69,
-                                    progressColor: Color(0xff53a96a),
-                                    lineHeight: 15,
-                                    barRadius: Radius.circular(10),                                    
-                                  ),
-                                )
-                              ),
+                                  child: StepProgress(),
+                                ),
+                              )
                             ],
                           ),
                         )
-                    ]),
-                  )),
-              Flexible(
-                  flex: 20,
-                  child: MainBox(
-                    theBottom: 10,
-                    theTop: 10,
-                    theWidth: double.infinity,
-                    theHeight: double.infinity,
-                    theChild: Center(
-                      child: Text('국민 여러분 좆됬습니다.'),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              Flexible(
+                flex: 20,
+                child: Text('ad'),
+                  ),
               Flexible(
                   flex: 60,
-                  child: MainBox(
-                    theBottom: 10,
-                    theTop: 0,
-                    theWidth: double.infinity,
-                    theHeight: double.infinity,
-                    theChild: Center(
-                      child: Text('라면 사십쇼 방독면 챙기십쇼.'),
-                    ),
-                  )),
+                  child: Text('ge')
+              ),
             ],
           ),
         ),
@@ -258,92 +206,12 @@ class _StepIndicatorState extends State<StepIndicator> {
 
 /*--------------------------------------------------------------------*/
 
-/*
-class ClassIndicator extends StatefulWidget {
-  const ClassIndicator({super.key});
-
-  @override
-  State<ClassIndicator> createState() => _ClassIndicatorState();
-}
-
-class _ClassIndicatorState extends State<ClassIndicator> {
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
-      child: Container(
-        margin: EdgeInsets.all(25),
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.transparent,
-        child: Stack(
-          children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.80)),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.white.withOpacity(0.85),
-                    Colors.white.withOpacity(0.75),
-                  ]
-                ),  
-              ),
-            ),
-            Center(
-              child: _buildList(),
-            )
-          ],
-        ),
-      )
-    );
-  }
-}
-*/
-
-ListTile _title(String title, String subtitle) => ListTile(
-      title: Text(
-        title,
-        style: TextStyle(color: Colors.black, fontSize: 24),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: TextStyle(color: Colors.black, fontSize: 16),
-      ),
-    );
-
-Widget _buildList() => ListView(
-      children: [],
-    );
-
 final Shader linearGradient = LinearGradient(
   colors: <Color>[
     Color.fromARGB(255, 68, 88, 218),
     Color.fromARGB(255, 103, 39, 177)
   ],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200, 70.0));
-
-class theDrawer extends StatefulWidget {
-  const theDrawer({super.key});
-
-  @override
-  State<theDrawer> createState() => _theDrawerState();
-}
-
-class _theDrawerState extends State<theDrawer> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 class StepProgress extends StatefulWidget {
   const StepProgress({super.key});
@@ -367,12 +235,13 @@ class _StepProgressState extends State<StepProgress> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        child: CircularPercentIndicator(
-      radius: 80.0,
-      lineWidth: 15.0,
+    return LinearPercentIndicator(
+      width: 150,
+      lineHeight: 10,
+      backgroundColor: Colors.grey.shade400,
+      progressColor: Color(0xff53a96a),
       percent: _displayedProgress,
-      center: Text('hehe'),
-    ));
+      barRadius: Radius.circular(10),
+    );
   }
 }
