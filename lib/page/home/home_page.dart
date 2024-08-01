@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Flexible(
-                  flex: 20,
+                  flex: 15,
                   child: Container(
                     margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                     width: double.infinity,
@@ -88,19 +88,19 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(25, 25, 25, 5),
-                                  height: 54,
+                                  margin: EdgeInsets.fromLTRB(0, 20, 45, 0),
+                                  height: 48,
                                   child: StepCounter(),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(35, 5, 35, 25),
-                                  height: 30,
+                                  margin: EdgeInsets.fromLTRB(35, 5, 35, 15),
+                                  height: 26,
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text('/ 10000 steps',
                                      style: TextStyle(
                                         color: Colors.grey.shade600,
-                                        fontSize: 22
+                                        fontSize: 20
                                       ),
                                     ),
                                   ),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.fromLTRB(70, 55, 0, 0),
+                                margin: EdgeInsets.fromLTRB(70, 40, 0, 0),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
@@ -136,10 +136,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.fromLTRB(60, 5, 0, 20),
+                                margin: EdgeInsets.fromLTRB(60, 5, 10, 10),
                                 height: 20,
                                 child: Align(
-                                  alignment: Alignment.bottomRight,
+                                  alignment: Alignment.centerRight,
                                   child: StepProgress(),
                                 ),
                               )
@@ -252,7 +252,7 @@ class _StepProgressState extends State<StepProgress> {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _displayedProgress = Global.userData!.steps.toDouble() / 10000;
+        _displayedProgress = Global.userData!.steps.toDouble() % 10000 / 10000;
       });
     });
   }
