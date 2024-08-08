@@ -7,7 +7,7 @@ import '../structure/class/user_data.dart';
 import 'manager/server/interface_server_manager.dart';
 
 class Global {
-  static UserData? userData;
+  static late UserData userData;
   static AppStatus appStatus = AppStatus();
 
   static late ServerManagerI serverManager;

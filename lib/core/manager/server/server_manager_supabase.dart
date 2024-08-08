@@ -66,9 +66,9 @@ class ServerManagerSupabase implements ServerManagerI {
 
   @override
   updateUserData() async {
-    final oldUserData = await retrieveUserData(Global.userData!.id);
+    final oldUserData = await retrieveUserData(Global.userData.id);
 
-    UserData ud = Global.userData!;
+    UserData ud = Global.userData;
 
     ud.steps = max(ud.steps, oldUserData.steps);
     ud.minutesActive = max(ud.minutesActive, oldUserData.minutesActive);
