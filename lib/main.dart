@@ -30,18 +30,14 @@ import 'core/manager/server/server_manager_supabase.dart';
   - A6
  */
 
+bool userLoggedIn = false;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await overallInit();
-
-  //debug(); // todo remove debug
-
-  int? userId = Global.prefs.getInt('user_id');
-  if (userId != null) {
-    Global.userData = await Global.serverManager.retrieveUserData(userId);
-  }
-
   grantPermission();
+
+  //debug();
 
   runApp(Contract());
 }
@@ -56,6 +52,17 @@ Future<void> overallInit() async {
   Global.prefs = await SharedPreferences.getInstance();
 
   await Global.serverManager.initDB();
+
+  int? userId = Global.prefs.getInt('user_id');
+  if (userId != null) {
+    Global.userData = await Global.serverManager.retrieveUserData(userId);
+    print(Global.userData);
+    userLoggedIn = true;
+  }
+}
+
+Future<void> grantPermission() async {
+  await Permission.activityRecognition.request();
 }
 
 class Contract extends StatefulWidget {
@@ -65,22 +72,13 @@ class Contract extends StatefulWidget {
   State<Contract> createState() => _ContractState();
 }
 
-Future<void> grantPermission() async {
-  await Permission.activityRecognition.request();
-}
-
 class _ContractState extends State<Contract> {
   @override
   Widget build(BuildContext context) {
     late Widget page;
 
-    page = Global.userData != null ? HomePage() : LoginPage();
-    // if (Global.userData.id == null) {
-    //   page = LoginPage();
-    // }
-    // else {
-    //   page = HomePage();
-    // }
+
+    page = userLoggedIn ? HomePage() : LoginPage();
 
     return MaterialApp(
       home: page

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../structure/class/class_data.dart';
-import '../../widget/class_preview_bar.dart';
+import '../../widget/class_preview_bar/class_preview_bar.dart';
 import 'package:contract/core/global.dart';
 
 class ClassListPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _ClassListPageState extends State<ClassListPage> { // todo A4 학사모 �
     final sm = Global.serverManager;
     List<ClassPreviewBar> res = [];
 
-    final List<ClassData> cds = await sm.getBelongClasses(Global.userData!.id);
+    final List<ClassData> cds = await sm.getBelongClasses(Global.userData.id);
 
     for (final classData in cds) {
       final tmp = ClassPreviewBar(

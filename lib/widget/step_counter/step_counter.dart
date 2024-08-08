@@ -4,8 +4,8 @@ import 'package:contract/structure/enum/pedestrian_status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pedometer/pedometer.dart';
 
-import '../core/global.dart';
-import '../structure/util/string_to_pedestrian_status.dart';
+import '../../core/global.dart';
+import '../../structure/util/string_to_pedestrian_status.dart';
 
 class StepCounter extends StatefulWidget {
   const StepCounter({super.key});
@@ -31,7 +31,7 @@ class _StepCounterState extends State<StepCounter> {
     super.initState();
     initPlatformState();
     initTimer();
-    _displayedText = Global.userData!.steps.toString();
+    _displayedText = Global.userData.steps.toString();
   }
 
   void initPlatformState() {
@@ -55,17 +55,17 @@ class _StepCounterState extends State<StepCounter> {
       as.secondsActive += 1;
       if (as.secondsActive == 60) {
         as.secondsActive = 0;
-        Global.userData!.minutesActive += 1;
+        Global.userData.minutesActive += 1;
       }
     });
   }
 
   void onStepCount(StepCount event) {
-    Global.userData!.steps += 1;
+    Global.userData.steps += 1;
     Global.serverManager.updateUserData();
 
     setState(() {
-      _displayedText = Global.userData!.steps.toString();
+      _displayedText = Global.userData.steps.toString();
     });
   }
 
