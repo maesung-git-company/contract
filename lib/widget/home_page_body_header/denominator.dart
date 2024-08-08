@@ -1,3 +1,4 @@
+import 'package:contract/core/config.dart';
 import 'package:flutter/material.dart';
 
 class Denominator extends StatefulWidget {
@@ -15,7 +16,7 @@ class _DenominatorState extends State<Denominator> {
       height: 26,
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Text('/ 10000 steps', // todo
+        child: Text('/ ${Config.stepRequiredPerTree} steps',
           style: TextStyle(
               color: Colors.grey.shade600,
               fontSize: 20

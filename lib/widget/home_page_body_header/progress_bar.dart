@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:contract/core/config.dart';
 import 'package:contract/core/global.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -17,9 +18,10 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   void initState() {
     super.initState();
+    const int srpt = Config.stepRequiredPerTree;
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _displayedProgress = Global.userData.steps.toDouble() % 10000 / 10000; // todo
+        _displayedProgress = Global.userData.steps.toDouble() % srpt / srpt;
       });
     });
   }

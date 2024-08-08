@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void sendClassListPageNav() {
+  void sendClassListPageNav() { // todo connect this to home page
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ClassListPage()),

@@ -88,7 +88,7 @@ class _StepCounterState extends State<StepCounter> {
   Widget build(BuildContext context) {
     return Text(
       _displayedText,
-      style: TextStyle(fontSize: 40),  // todo A3 폰트 크기를 메시지마다 다르게 설정해주셈
+      style: TextStyle(fontSize: 40),
     );
   }
 }
