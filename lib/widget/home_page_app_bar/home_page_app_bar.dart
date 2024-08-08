@@ -1,3 +1,4 @@
+import 'package:contract/core/utility.dart';
 import 'package:contract/page/login/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()), // todo remove tokens and memory info too
+                MaterialPageRoute(builder: (context) {
+                  Utility.logOut();
+                  return LoginPage();
+                }),
               );
             },
             icon: Icon(Icons.arrow_back_ios_new));

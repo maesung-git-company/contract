@@ -21,15 +21,6 @@ import 'core/manager/server/server_manager_supabase.dart';
   - visual : first to work - on jeery
  */
 
-/* todo list for jeery:
-  - A1
-  - A2
-  - A3
-  - A4
-  - A5
-  - A6
- */
-
 bool userLoggedIn = false;
 
 Future<void> main() async {
@@ -56,7 +47,6 @@ Future<void> overallInit() async {
   int? userId = Global.prefs.getInt('user_id');
   if (userId != null) {
     Global.userData = await Global.serverManager.retrieveUserData(userId);
-    print(Global.userData);
     userLoggedIn = true;
   }
 }

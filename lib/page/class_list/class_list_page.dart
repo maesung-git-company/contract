@@ -11,7 +11,7 @@ class ClassListPage extends StatefulWidget {
   State<ClassListPage> createState() => _ClassListPageState();
 }
 
-class _ClassListPageState extends State<ClassListPage> { // todo A4 학사모 누르면 뜨는 페이지인데 지금 너무하게 못생겼으니 부탁함, 홈페이지로 돌아가는 버튼도 추가 요망.
+class _ClassListPageState extends State<ClassListPage> {
 
   Future<List<ClassPreviewBar>> getClasses() async {
     final sm = Global.serverManager;
