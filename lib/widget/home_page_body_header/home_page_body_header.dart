@@ -35,7 +35,7 @@ class _HomePageBodyHeaderState extends State<HomePageBodyHeader> { // todo jeery
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 20, 45, 0),
-                    height: 48,
+                    height: 44,
                     child: StepCounter(),
                   ),
                   Denominator()

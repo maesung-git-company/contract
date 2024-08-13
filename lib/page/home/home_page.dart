@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:contract/core/global.dart';
 import 'package:contract/page/class_list/class_list_page.dart';
 import 'package:contract/structure/class/user_data.dart';
+import 'package:contract/widget/class_stat_drawer/class_stat_drawer.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget/home_page_body_bottom/home_page_body_bottom.dart';
 import 'package:contract/widget/home_page_body_header/home_page_body_header.dart';
 import 'package:contract/widget/home_page_body_torso/home_page_body_torso.dart';
+import 'package:contract/widget_functional/swipeable/swipeable.dart';
 import 'package:flutter/material.dart';
 
 
@@ -55,6 +57,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+        drawer: ClassStatDrawer(),
+        drawerEdgeDragWidth: MediaQuery.of(context).size.width,
       ),
     );
   }
