@@ -15,16 +15,13 @@ class HomePageBodyHeader extends StatefulWidget {
 class _HomePageBodyHeaderState extends State<HomePageBodyHeader> { // todo jeery 오버플로 하는거 고쳐줘
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 15,
-      child: Container(
+    return Container(
         margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
         width: double.infinity,
-        height: double.infinity,
+        height: 110,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 1, style: BorderStyle.solid, color: Colors.grey.shade500),
+          borderRadius: BorderRadius.circular(25),
         ),
         child: Row(
           children: [
@@ -32,13 +29,14 @@ class _HomePageBodyHeaderState extends State<HomePageBodyHeader> { // todo jeery
             Flexible(
               flex: 50,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 45, 0),
-                    height: 44,
-                    child: StepCounter(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 25,
                   ),
-                  Denominator()
+                  StepCounter(),
+                  Denominator(),
                 ],
               )
             ),
@@ -47,14 +45,21 @@ class _HomePageBodyHeaderState extends State<HomePageBodyHeader> { // todo jeery
               flex: 50,
               child: Column(
                 children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 30,
+                  ),
                   Percentage(),
-                  ProgressBar()
+                  ProgressBar(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 30,
+                  )
                 ],
               ),
             )
           ],
         ),
-      ),
-    );
+      );
   }
 }

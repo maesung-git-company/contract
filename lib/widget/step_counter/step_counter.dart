@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:contract/structure/enum/pedestrian_status.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
 import '../../core/global.dart';
@@ -86,9 +87,16 @@ class _StepCounterState extends State<StepCounter> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _displayedText,
-      style: TextStyle(fontSize: 40),
+    return Container(
+      margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+      child: Text(_displayedText,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 32,
+          fontWeight: FontWeight.w600,
+          height: 1,
+        ),
+      ),
     );
   }
 }
