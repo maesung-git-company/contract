@@ -42,7 +42,7 @@ class ServerManagerSupabase implements ServerManagerI {
 
     userData.id = userId;
     userData.steps = data["steps"];
-    userData.minutesActive = data["minutes_active"];
+    userData.secondsActive = data["seconds_active"];
     userData.belongClassesUuid
       = List<String>.from(data['belong_classes_uuid'] as List);
 
@@ -71,13 +71,13 @@ class ServerManagerSupabase implements ServerManagerI {
     UserData ud = Global.userData;
 
     ud.steps = max(ud.steps, oldUserData.steps);
-    ud.minutesActive = max(ud.minutesActive, oldUserData.minutesActive);
+    ud.secondsActive = max(ud.secondsActive, oldUserData.secondsActive);
 
     await _supabase
         .from('user_data')
         .update({
           'steps': ud.steps,
-          'minutes_active': ud.minutesActive
+          'seconds_active': ud.secondsActive
         })
         .eq('id', ud.id);
   }

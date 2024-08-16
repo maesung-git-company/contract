@@ -5,6 +5,8 @@
 
 // yeah they actually aren't
 
+// mostly
+
 import 'global.dart';
 
 class Utility {

@@ -1,13 +1,21 @@
+import 'package:contract/core/global.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePageBodyTorso extends StatefulWidget {
-  const HomePageBodyTorso({super.key});
+class WorkoutStopwatchPanel extends StatefulWidget {
+  const WorkoutStopwatchPanel({super.key});
 
   @override
-  State<HomePageBodyTorso> createState() => _HomePageBodyTorsoState();
+  State<WorkoutStopwatchPanel> createState() => _WorkoutStopwatchPanelState();
 }
 
-class _HomePageBodyTorsoState extends State<HomePageBodyTorso> {
+class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
+  @override
+  void initState() {
+    super.initState();
+    Global.userData.addListener(() { setState(() {}); });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +33,8 @@ class _HomePageBodyTorsoState extends State<HomePageBodyTorso> {
           child: Row(
             children: [
               Text(
-                "15:57",
+                "${addPadding(Global.userData.secondsActive ~/ (60 * 60), 2)}"
+                    ":${addPadding(Global.userData.secondsActive ~/ 60, 2)}",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
@@ -49,3 +58,11 @@ class _HomePageBodyTorsoState extends State<HomePageBodyTorso> {
   }
 }
 
+
+String addPadding(int x, int till) {
+  String res = x.toString();
+  while (res.length < till) {
+    res = "0$res";
+  }
+  return res;
+}

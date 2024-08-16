@@ -31,7 +31,6 @@ class _StepCounterState extends State<StepCounter> {
   void initState() {
     super.initState();
     initPlatformState();
-    initTimer();
     _displayedText = Global.userData.steps.toString();
   }
 
@@ -47,23 +46,8 @@ class _StepCounterState extends State<StepCounter> {
     if (!mounted) return;
   }
 
-  void initTimer() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      final as = Global.appStatus;
-
-      if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
-
-      as.secondsActive += 1;
-      if (as.secondsActive == 60) {
-        as.secondsActive = 0;
-        Global.userData.minutesActive += 1;
-      }
-    });
-  }
-
   void onStepCount(StepCount event) {
     Global.userData.steps += 1;
-    Global.serverManager.updateUserData();
 
     setState(() {
       _displayedText = Global.userData.steps.toString();
@@ -73,7 +57,6 @@ class _StepCounterState extends State<StepCounter> {
    void onStepCountError(error) {
     setState(() {
       _displayedText = "Error";
-
     });
   }
 

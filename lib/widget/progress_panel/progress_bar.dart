@@ -33,7 +33,7 @@ class _ProgressBarState extends State<ProgressBar> {
       height: 20,
       child: Center(
         child: LinearPercentIndicator(
-          width: 160,
+          width: 130,
           lineHeight: 10,
           backgroundColor: Colors.grey.shade400,
           progressColor: Color(0xff53a96a),

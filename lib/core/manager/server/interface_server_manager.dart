@@ -15,5 +15,6 @@ abstract interface class ServerManagerI {
   Future<DateTime> getClassLatestSumWhen(String uuid);
   Future<int> getLatestClassTotalSteps(String uuid);
   Future<ClassData> retrieveClassData(String uuid);
+
   Future<void> updateClassLatestTotalSteps(String uuid, int totalSteps);
 }
