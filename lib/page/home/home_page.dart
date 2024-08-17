@@ -9,6 +9,7 @@ import 'package:contract/widget/progress_panel/progress_panel.dart';
 import 'package:contract/widget/tree/tree.dart';
 import 'package:contract/widget/workout_stopwatch_panel/workout_stopwatch.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 
 // Color Codes
@@ -59,29 +60,40 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: HomePageAppBar(),
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Tree(),
-              Flexible(
-                flex: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                    color: Colors.grey.shade200,
-                  ),
-                  child: Column(
-                    children: [
-                      ProgressPanel(),
-                      WorkoutStopwatchPanel(),
-                      LeaderBoardPanel()
-                    ],
-                  ),
-                ),
+        body: SizedBox(
+          child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Tree(),
+                  Flexible(
+                    flex: 5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                        color: Colors.grey.shade200,
+                      ),
+                      child: Column(
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: ProgressPanel(),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: WorkoutStopwatchPanel(),
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: LeaderBoardPanel(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               )
-            ],
-          )
+            ),
         ),
         drawer: ClassStatDrawer(),
         drawerEdgeDragWidth: MediaQuery.of(context).size.width,

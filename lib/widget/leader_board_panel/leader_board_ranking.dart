@@ -2,6 +2,7 @@ import 'package:contract/core/global.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/structure/util/data_processor.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class LeaderBoardRanking extends StatefulWidget {
   const LeaderBoardRanking({super.key});
@@ -67,32 +68,34 @@ class RankRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      margin: EdgeInsets.fromLTRB(25, 0, 0, 25),
-      child: Row(
-        children: [
-          Text(
-            head,
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w700
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 7, 0, 0),
-            child: Text(
-              id,
+    return Skeletonizer(
+      child: Container(
+        height: 40,
+        margin: EdgeInsets.fromLTRB(25, 0, 0, 25),
+        child: Row(
+          children: [
+            Text(
+              head,
               style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey.shade600,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700
               ),
             ),
-          )
-        ],
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 7, 0, 0),
+              child: Text(
+                id,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

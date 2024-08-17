@@ -75,7 +75,7 @@ class _StepCounterState extends State<StepCounter> {
       child: Text(_displayedText,
         style: TextStyle(
           color: Colors.black,
-          fontSize: 32,
+          fontSize: 30,
           fontWeight: FontWeight.w600,
           height: 1,
         ),

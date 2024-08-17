@@ -14,15 +14,13 @@ class _DenominatorState extends State<Denominator> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-      child: Align(
-        alignment: Alignment.centerLeft,
         child: Text('/${NumberFormat('#,###').format(Config.stepRequiredPerTree)} steps',
           style: TextStyle(
               color: Colors.grey.shade600,
-              fontSize: 16
+              fontSize: 17,
+              letterSpacing: 1.2
           ),
         ),
-      ),
-    );
+      );
   }
 }
