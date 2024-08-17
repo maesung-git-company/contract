@@ -42,9 +42,9 @@ class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
       flex: 1,
       child: Column(
         children: [
-          SizedBox(  // todo jeery 이거 실행했을때 세로줄이 안맞는데 해결가능?
+          SizedBox(  // todo jeery 이거 실행했을때 세로줄이 안맞는데 해결가능? - 확인좀
             width: double.infinity,
-            height: 10,
+            height: 25,
           ),
           Column(
             children: rankRows,
@@ -69,7 +69,7 @@ class RankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
+      margin: EdgeInsets.fromLTRB(25, 0, 0, 25),
       child: Row(
         children: [
           Text(
@@ -80,15 +80,18 @@ class RankRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 10,
+            width: 15,
           ),
-          Text(
-            id,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey.shade600,
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 7, 0, 0),
+            child: Text(
+              id,
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey.shade600,
+              ),
             ),
-          ),
+          )
         ],
       ),
     );

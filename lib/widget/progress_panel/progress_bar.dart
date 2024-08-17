@@ -29,11 +29,11 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(40, 0, 20, 0),
+      margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
       height: 20,
       child: Center(
         child: LinearPercentIndicator(
-          width: 130,
+          width: 160,
           lineHeight: 10,
           backgroundColor: Colors.grey.shade400,
           progressColor: Color(0xff53a96a),

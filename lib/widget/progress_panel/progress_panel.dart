@@ -44,6 +44,7 @@ class _ProgressPanelState extends State<ProgressPanel> {
           Flexible(
             flex: 50,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   width: double.infinity,
