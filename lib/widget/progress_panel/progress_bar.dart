@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:contract/core/config.dart';
 import 'package:contract/core/global.dart';
@@ -20,9 +19,9 @@ class _ProgressBarState extends State<ProgressBar> {
   void initState() {
     super.initState();
     const int srpt = Config.stepRequiredPerTree;
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Global.userData.addListener(this, () {
       setState(() {
-        _displayedProgress = Global.userData.steps.toDouble() % srpt / srpt;
+        _displayedProgress = Global.userData.steps % srpt / srpt;
       });
     });
   }

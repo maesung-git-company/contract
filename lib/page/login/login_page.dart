@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:contract/widget/main_app/main_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/global.dart';
@@ -49,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => MainApp()),
     );
   }
 

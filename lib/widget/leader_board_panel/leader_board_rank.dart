@@ -1,6 +1,7 @@
 import 'package:contract/core/global.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/structure/util/data_processor.dart';
+import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -18,15 +19,16 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
   @override
   void initState() {
     super.initState();
-    Global.userData.addListener(() {
+    Global.userData.addListener(this, () {
       updateClassmatesData();
     });
     updateClassmatesData();
   }
 
   void updateClassmatesData() {
-    setState(() {
-      getClassmatesSortedBySteps().then((List<UserData> cmd) {
+    getClassmatesSortedBySteps().then((List<UserData> cmd) {
+      if (!mounted) return;
+      setState(() {
         classmatesDataSorted = cmd;
       });
     });
@@ -34,79 +36,74 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SkeletonSafe(
+      inspectList: [classmatesDataSorted],
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Skeletonizer(
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Leader Board",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  )
-              ),
-            ),
-            Skeletonizer(
-              child: Container(
-                  margin: EdgeInsets.fromLTRB(30, 0, 0, 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "in your class",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade600
-                      ),
-                    ),
-                  )
-              ),
-            ),
-            Skeletonizer(
-              child: Container(
+            Container(
                 margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
                 child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Text(
-                          "you are on",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade600
-                          ),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Leader Board",
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+            ),
+            Container(
+                margin: EdgeInsets.fromLTRB(30, 0, 0, 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "in your class",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600
+                    ),
+                  ),
+                )
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        "you are on",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey.shade600
                         ),
-                        SizedBox(
-                          width: 5,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "${classmatesDataSorted != null
+                            ? classmatesDataSorted!.indexWhere((user) => user.id == Global.userData.id) + 1
+                            : "-"}",
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
-                        Text(
-                          "${classmatesDataSorted != null
-                              ? classmatesDataSorted!.indexWhere((user) => user.id == Global.userData.id) + 1
-                              : "-"}",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "th",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey.shade600
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "th",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade600
-                          ),
-                        ),
-                      ],
-                    )
-                ),
+                      ),
+                    ],
+                  )
               ),
             ),
           ],

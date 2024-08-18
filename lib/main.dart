@@ -1,10 +1,13 @@
+import 'package:contract/page/class_stat/class_stat_page.dart';
 import 'package:contract/page/home/home_page.dart';
 import 'package:contract/page/login/login_page.dart';
+import 'package:contract/widget/main_app/main_app.dart';
+import 'package:contract/widget_functional/swipe_app/swipe_app.dart';
+import 'package:contract/widget_functional/swipeable_horizontal/swipeable_horizontal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'core/global.dart';
 import 'core/manager/server/interface_server_manager.dart';
 import 'core/manager/server/server_manager_supabase.dart';
@@ -67,8 +70,9 @@ class _ContractState extends State<Contract> {
   Widget build(BuildContext context) {
     late Widget page;
 
-
-    page = userLoggedIn ? HomePage() : LoginPage();
+    page = userLoggedIn
+        ? MainApp()
+        : LoginPage();
 
     return MaterialApp(
       home: page

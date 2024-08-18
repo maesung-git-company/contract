@@ -18,7 +18,7 @@ class StepCounter extends StatefulWidget {
 class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String _displayedText = '';
+  String? _displayedText;
 
   @override
   void setState(fn) {
@@ -55,9 +55,9 @@ class _StepCounterState extends State<StepCounter> {
   }
 
    void onStepCountError(error) {
-    setState(() {
-      _displayedText = "Error";
-    });
+    // setState(() {
+    //   _displayedText = "Error";
+    // });
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
@@ -72,7 +72,7 @@ class _StepCounterState extends State<StepCounter> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-      child: Text(_displayedText,
+      child: Text(_displayedText!,
         style: TextStyle(
           color: Colors.black,
           fontSize: 30,

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:contract/core/global.dart';
 import 'package:contract/structure/enum/pedestrian_status.dart';
-import 'package:contract/widget/class_stat_drawer/class_stat_drawer.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget/leader_board_panel/leader_board_panel.dart';
 import 'package:contract/widget/progress_panel/progress_panel.dart';
@@ -25,6 +24,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Timer activityTracker;
+  late Timer userDataSyncer;
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   // }
 
   void initTimer() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
       final as = Global.appStatus;
 
       if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       Global.userData.secondsActive += 1;
     });
 
-    Timer.periodic(Duration(seconds: 5), (timer) {
+    userDataSyncer = Timer.periodic(Duration(seconds: 5), (timer) {
       Global.userData.onUpdate();
       // onUpdate() method is for when userData is modified
       // but this time i'm calling it manually so the app can sync with the server
@@ -95,9 +97,14 @@ class _HomePageState extends State<HomePage> {
               )
             ),
         ),
-        drawer: ClassStatDrawer(),
-        drawerEdgeDragWidth: MediaQuery.of(context).size.width,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    activityTracker.cancel();
+    userDataSyncer.cancel();
+    super.dispose();
   }
 }
