@@ -1,3 +1,4 @@
+import 'package:contract/core/config.dart';
 import 'package:contract/core/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -24,7 +25,7 @@ class _PercentageState extends State<Percentage> {
         child: Center(
           child: Container(
             margin: EdgeInsets.all(1),
-            child: Text('${(Global.userData.steps / 10000 * 100).round()}%',
+            child: Text('${(Global.userData.steps / Config.stepRequiredPerTree * 100).round()}%',
               style: TextStyle(
                 color: Color(0xff53a96a),
                 fontSize: 15,

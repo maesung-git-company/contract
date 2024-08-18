@@ -13,7 +13,7 @@ class ProgressBar extends StatefulWidget {
 }
 
 class _ProgressBarState extends State<ProgressBar> {
-  double _displayedProgress = 0.0;
+  double _progressPercentage = 0.0;
 
   @override
   void initState() {
@@ -21,7 +21,9 @@ class _ProgressBarState extends State<ProgressBar> {
     const int srpt = Config.stepRequiredPerTree;
     Global.userData.addListener(this, () {
       setState(() {
-        _displayedProgress = Global.userData.steps % srpt / srpt;
+        _progressPercentage = Global.userData.steps / srpt < 1
+            ? Global.userData.steps / srpt
+            : 1.0;
       });
     });
   }
@@ -38,7 +40,7 @@ class _ProgressBarState extends State<ProgressBar> {
             lineHeight: 10,
             backgroundColor: Colors.grey.shade400,
             progressColor: Color(0xff53a96a),
-            percent: _displayedProgress,
+            percent: _progressPercentage,
             barRadius: Radius.circular(10),
           )
         ),

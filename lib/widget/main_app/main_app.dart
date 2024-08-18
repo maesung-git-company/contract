@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
     return SwipeApp(
       pages: [
         HomePage(),
-        ClassStatPage(),
+        ClassStatPage(), // todo SchoolStatPage
       ],
       initialPageIndex: 0,
     );
