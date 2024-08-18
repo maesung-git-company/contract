@@ -62,40 +62,47 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: HomePageAppBar(),
-        body: SizedBox(
-          child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Tree(),
-                  Flexible(
-                    flex: 5,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                        color: Colors.grey.shade200,
-                      ),
-                      child: Column(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: ProgressPanel(),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: WorkoutStopwatchPanel(),
-                          ),
-                          Flexible(
-                            flex: 2,
-                            child: LeaderBoardPanel(),
-                          ),
-                        ],
-                      ),
+
+        //-----------------------------------------//
+
+        body: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 4,
+                child: Tree(),
+              ),
+              Flexible(
+                flex: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
-                  )
-                ],
-              )
-            ),
+                  ),
+                  child: Column(
+                    children: [
+                      Flexible(
+                        flex: 3,
+                        child: ProgressPanel(),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: WorkoutStopwatchPanel(),
+                      ),
+                      Flexible(
+                        flex: 5,
+                        child: LeaderBoardPanel(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

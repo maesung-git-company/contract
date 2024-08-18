@@ -10,8 +10,7 @@ class Tree extends StatefulWidget {
 class _TreeState extends State<Tree> {
   @override
   Widget build(BuildContext context) {  // todo jeery 그림추가
-    return Flexible(
-      flex: 5,
+    return SizedBox(
       child: Center(
         child: Text(''),
       ),

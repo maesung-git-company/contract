@@ -22,7 +22,7 @@ class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       width: double.infinity,
-      height: 100,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
@@ -41,11 +41,8 @@ class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              SizedBox(
-                width: 15,
-              ),
               Text(
-                "Workouts this day",
+                "  Workouts this day",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey.shade600,

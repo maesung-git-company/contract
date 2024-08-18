@@ -19,36 +19,14 @@ class _ProgressPanelState extends State<ProgressPanel> {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
       width: double.infinity,
-      height: 110,
+      height: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
         children: [
-          // left side
-          Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: StepCounter(),
-                    ),
-                    Flexible(
-                      child: Denominator(),
-                    ),
-                  ],
-                ),
-              )
-          ),
-
-          //-------------------------------------------------------------------//
-          // right side
-
+          // Left side
           Flexible(
             flex: 1,
             child: SizedBox(
@@ -58,17 +36,42 @@ class _ProgressPanelState extends State<ProgressPanel> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
+                    flex: 1,
+                    child: StepCounter(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Denominator(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //-------------------------------------------------------------------//
+          // Right side
+          Flexible(
+            flex: 1,
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    flex: 1,
                     child: Percentage(),
                   ),
                   Flexible(
+                    flex: 1,
                     child: ProgressBar(),
                   ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+

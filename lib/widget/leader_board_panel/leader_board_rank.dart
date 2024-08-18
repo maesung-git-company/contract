@@ -43,67 +43,68 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Leader Board",
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.w700,
-                    ),
+              margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Leader Board",
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w700,
                   ),
-                )
+                ),
+              ),
             ),
             Container(
-                margin: EdgeInsets.fromLTRB(30, 0, 0, 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "in your class",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade600
-                    ),
+              margin: EdgeInsets.fromLTRB(30, 0, 0, 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "in your class",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.shade600,
                   ),
-                )
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
               child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      Text(
-                        "you are on",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey.shade600
-                        ),
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "you are on",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600,
                       ),
-                      SizedBox(
-                        width: 5,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "${classmatesDataSorted != null
+                          ? classmatesDataSorted!.indexWhere((user) =>
+                      user.id == Global.userData.id) + 1
+                          : "-"}",
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
-                      Text(
-                        "${classmatesDataSorted != null
-                            ? classmatesDataSorted!.indexWhere((user) => user.id == Global.userData.id) + 1
-                            : "-"}",
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "th",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600,
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "th",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey.shade600
-                        ),
-                      ),
-                    ],
-                  )
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
