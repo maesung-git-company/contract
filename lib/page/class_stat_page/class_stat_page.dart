@@ -139,7 +139,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 55,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -153,11 +153,11 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
         style: TextStyle(fontSize: 16),
         child: Row(
           children: [
-            SizedBox(width: 10),
+            SizedBox(width: 20),
             Flexible(
               flex: 1,
               child: SizedBox(
-                width: 40,
+                width: 50,
                 child: Text("${widget.rank}등")
               ),
             ),
