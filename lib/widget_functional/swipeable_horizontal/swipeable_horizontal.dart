@@ -19,12 +19,28 @@ class SwipeableHorizontal extends StatefulWidget {
 }
 
 class _SwipeableHorizontalState extends State<SwipeableHorizontal> {
+  bool enabled = true;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onPanUpdate: (details) {
-        if (details.delta.dx < -widget.sensitivity) widget.onSwipeRight();
-        if (details.delta.dx > widget.sensitivity) widget.onSwipeLeft();
+        if (!enabled) return;
+
+        if (details.delta.dx < -widget.sensitivity) {
+          widget.onSwipeRight();
+        } else if (details.delta.dx > widget.sensitivity) {
+          widget.onSwipeLeft();
+        } else {
+          return;
+        }
+
+        // lil delay after swipe
+        enabled = false;
+        // todo perhaps delay till input is stabilized?
+        Future.delayed(const Duration(milliseconds: 300), () => {
+          enabled = true
+        });
       },
       child: widget.child,
     );

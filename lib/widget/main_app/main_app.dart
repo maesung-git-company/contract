@@ -1,5 +1,6 @@
-import 'package:contract/page/class_stat/class_stat_page.dart';
-import 'package:contract/page/home/home_page.dart';
+import 'package:contract/page/class_stat_page/class_stat_page.dart';
+import 'package:contract/page/home_page/home_page.dart';
+import 'package:contract/page/school_stat_page/school_stat_page.dart';
 import 'package:contract/widget_functional/swipe_app/swipe_app.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,7 +12,8 @@ class MainApp extends StatelessWidget {
     return SwipeApp(
       pages: [
         HomePage(),
-        ClassStatPage(), // todo SchoolStatPage
+        ClassStatPage(),
+        SchoolStatPage(),
       ],
       initialPageIndex: 0,
     );

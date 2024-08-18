@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/global.dart';
 import '../../structure/class/user_data.dart';
-import '../home/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

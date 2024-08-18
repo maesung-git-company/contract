@@ -1,5 +1,5 @@
 import 'package:contract/core/utility.dart';
-import 'package:contract/page/login/login_page.dart';
+import 'package:contract/page/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {

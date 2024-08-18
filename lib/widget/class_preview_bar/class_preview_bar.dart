@@ -1,6 +1,6 @@
+import 'package:contract/page/class_stat_page/class_stat_page.dart';
 import 'package:flutter/material.dart';
 
-import 'package:contract/page/class_stat/class_stat_page.dart';
 
 class ClassPreviewBar extends StatefulWidget {
   final String title;

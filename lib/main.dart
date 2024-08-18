@@ -1,6 +1,3 @@
-import 'package:contract/page/class_stat/class_stat_page.dart';
-import 'package:contract/page/home/home_page.dart';
-import 'package:contract/page/login/login_page.dart';
 import 'package:contract/widget/main_app/main_app.dart';
 import 'package:contract/widget_functional/swipe_app/swipe_app.dart';
 import 'package:contract/widget_functional/swipeable_horizontal/swipeable_horizontal.dart';
@@ -11,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'core/global.dart';
 import 'core/manager/server/interface_server_manager.dart';
 import 'core/manager/server/server_manager_supabase.dart';
+import 'page/login_page/login_page.dart';
 
 /* todo list:
   - class preview bar onclick, curr
