@@ -64,21 +64,14 @@ class _ClassStatPageState extends State<ClassStatPage> {
             padding: EdgeInsets.zero,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
+                padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
                 decoration: BoxDecoration(
                   color: Color(0xff53a96a),
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                      width: 1.0,
-                    ),
-                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 1),
                     ),
                   ],
                 ),
@@ -153,31 +146,45 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
         style: TextStyle(fontSize: 16),
         child: Row(
           children: [
-            SizedBox(width: 10),
             Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: 40,
-                child: Text("${widget.rank}등")
+              flex: 2,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                child: Center(
+                  child: Text("${widget.rank}등",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  )
+                ),
               ),
             ),
             Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: 70,
-                child: Text(widget.user.id.toString()),
+              flex: 3,
+              child: Center(
+                child: Text(widget.user.id.toString(),
+                  style: TextStyle(
+                      fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey.shade600
+                  ),
+                )
               ),
             ),
             Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: 40,
-                child: Text("${(widget.user.steps / Config.stepRequiredPerTree * 100).round()}%")
+              flex: 2,
+              child: Center(
+                child: Text("${(widget.user.steps / Config.stepRequiredPerTree * 100).round()}%",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                )
               ),
             ),
             Center(
               child: LinearPercentIndicator(
-                width: 150,
+                width: 170,
                 lineHeight: 10,
                 backgroundColor: Colors.grey.shade400,
                 progressColor: Color(0xff53a96a),
@@ -188,10 +195,14 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
               )
             ),
             Flexible(
-              flex: 1,
-              child: SizedBox(
-                width: 150,
-                child: Text("${widget.user.steps}"),
+              flex: 3,
+              child: Center(
+                child: Text("${widget.user.steps}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ),
           ]
