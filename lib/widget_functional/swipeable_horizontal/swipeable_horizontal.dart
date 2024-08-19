@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 
 class SwipeableHorizontal extends StatefulWidget {
@@ -20,11 +22,15 @@ class SwipeableHorizontal extends StatefulWidget {
 
 class _SwipeableHorizontalState extends State<SwipeableHorizontal> {
   bool enabled = true;
+  Timer? timer;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onPanUpdate: (details) {
+        timer?.cancel();
+        timer = Timer(Duration(milliseconds: 10), () { enabled = true; });
+
         if (!enabled) return;
 
         if (details.delta.dx < -widget.sensitivity) {
@@ -35,12 +41,7 @@ class _SwipeableHorizontalState extends State<SwipeableHorizontal> {
           return;
         }
 
-        // lil delay after swipe
         enabled = false;
-        // todo perhaps delay till input is stabilized?
-        Future.delayed(const Duration(milliseconds: 300), () => {
-          enabled = true
-        });
       },
       child: widget.child,
     );

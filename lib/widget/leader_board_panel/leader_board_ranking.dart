@@ -48,7 +48,8 @@ class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
         flex: 1,
         child: Column(
           children: [
-            SizedBox(  // todo jeery 이거 실행했을때 세로줄이 안맞는데 해결가능? - 확인좀
+            SizedBox(  // todo jeery 이거 실행했을때 세로줄이 안맞는데 해결가능? - 확인좀 -
+              // todo - ㄴㄴ 아이디 숫자부분에서 세로로 줄 그었을때 맞는걸로 해줘
               width: double.infinity,
               height: 25,
             ),

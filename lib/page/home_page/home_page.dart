@@ -33,13 +33,6 @@ class _HomePageState extends State<HomePage> {
     initTimer();
   }
 
-  // void sendClassListPageNav() { // todo connect this to home page, scroll?
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => ClassListPage()),
-  //   );
-  // }
-
   void initTimer() {
     activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
       final as = Global.appStatus;

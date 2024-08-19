@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 
-class UserData { // todo listening dispose
+class UserData {
   late int _id;
   late int _steps;
   late int _secondsActive;

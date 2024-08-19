@@ -31,7 +31,7 @@ class _TestPageState extends State<SwipeApp> {
   @override
   Widget build(BuildContext context) {
     return SwipeableHorizontal( // todo perhaps swipe animation?
-      sensitivity: 8.0,  // todo investigate if its ok
+      sensitivity: 8.0,
       onSwipeLeft: () => {
         setState(() {
           int idx = currentPageIndex - 1;

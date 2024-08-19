@@ -40,5 +40,3 @@ class _SkeletonSafeState extends State<SkeletonSafe> {
     );
   }
 }
-
-// todo 동적 레이아웃, 클래스 스탯에도 씌우기

@@ -19,28 +19,46 @@ class ClassStatPage extends StatefulWidget {
 class _ClassStatPageState extends State<ClassStatPage> {
   List<UserData>? classmatesDataSorted;
   ClassData? classData;
+  int? totalSteps;
 
   @override
   void initState() {
     super.initState();
     Global.userData.addListener(this, () {
-      updateData();
+      updateClassmatesSortedBySteps();
+      updateTotalStep();
+      updateClassData();
     });
-    updateData();
+    updateClassmatesSortedBySteps();
+    updateTotalStep();
+    updateClassData();
   }
 
-  void updateData() {
+  void updateClassData() {
     Global.serverManager.getBelongClasses(Global.userData.id).then((List<ClassData> cd) {
       if (!mounted) return;
       setState(() {
-        classData = cd[0]; // todo classes
+        classData = cd[0];
       });
     });
+  }
 
+  void updateClassmatesSortedBySteps() {
     getClassmatesSortedBySteps().then((List<UserData> cmd) {
       if (!mounted) return;
       setState(() {
         classmatesDataSorted = cmd;
+      });
+    });
+  }
+
+  void updateTotalStep() {
+    Global.serverManager.getBelongClasses(Global.userData.id).then((List<ClassData> cdList) {
+      return cdList[0].getTotalStep();
+    }).then((int totalStep) {
+      if (!mounted) return;
+      setState(() {
+        totalSteps = totalStep;
       });
     });
   }
@@ -51,7 +69,9 @@ class _ClassStatPageState extends State<ClassStatPage> {
 
     if (classmatesDataSorted != null) {
       for (int i = 0; i < classmatesDataSorted!.length; i++) {
-        classStatRankRows.add(ClassStatRankRow(user: classmatesDataSorted![i], rank: i,));
+        classStatRankRows.add(
+            ClassStatRankRow(user: classmatesDataSorted![i], rank: i + 1,)
+        );
       }
     }
 
@@ -77,19 +97,30 @@ class _ClassStatPageState extends State<ClassStatPage> {
                 ),
                 child: SkeletonSafe(
                   inspectList: [classData],
-                  onDisabled: updateData,
-                  child: Text(
-                      "${classData?.name}",
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  onDisabled: updateClassData,
+                  child: Column(
+                    children: [
+                      Text(
+                        "${classData?.name}",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SkeletonSafe(
+                        inspectList: [totalSteps],
+                        onDisabled: updateTotalStep,
+                        child: Text(
+                          "총 $totalSteps걸음",
+                        ),
+                      ),
+                    ]
                   )
                 ),
               ),
               SkeletonSafe(
                 inspectList: [classmatesDataSorted],
-                onDisabled: updateData,
+                onDisabled: updateClassmatesSortedBySteps,
                 pseudoLayout: Column(
                   children: [ // lol
                     ClassStatRankRow(user: Global.userData, rank: 1),
@@ -104,7 +135,7 @@ class _ClassStatPageState extends State<ClassStatPage> {
                 ),
                 child: SkeletonSafe(
                   inspectList: [classmatesDataSorted],
-                  onDisabled: updateData,
+                  onDisabled: updateClassmatesSortedBySteps,
                   child: Column(
                     children: classStatRankRows,
                   ),
@@ -151,7 +182,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Center(
-                  child: Text("${widget.rank}등",
+                  child: Text("${widget.rank}등", // todo jeery 이거 좀 더 너비 줘야할듯
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold
@@ -197,7 +228,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
             Flexible(
               flex: 3,
               child: Center(
-                child: Text("${widget.user.steps}",
+                child: Text("${widget.user.steps}걸음",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -211,4 +242,3 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
     );
   }
 }
-// todo 반친구 정보 갱신, 페이지 넘어오면 리로드(리더보드
