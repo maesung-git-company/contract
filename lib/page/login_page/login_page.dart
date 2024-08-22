@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   onLoginAttempt() async {
     int userId = int.parse(loginIdController.text);
 
-    if (userId > pow(2, (4 * 8 - 1)) - 1) {
+    if (userId.toString().length > 6) {
       displayErrorMessageFor(
         "정상적인 숫자를 써주세요..",
         5000
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
 
   onLoginFail() {
     displayErrorMessageFor(
-      "존재하는 아이디를 써주세요.. 에러라 판단되면 2216을 찾으시오..",
+      "다음 중 하나의 문제가 발생했습니다: \n아이디, 인터넷 연결, 개발자 2216",
       5000
     );
   }
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
             margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
             child: Column(
               children: [
-                Text("Title", 
+                Text("Log In",
                   style: TextStyle(
                     fontSize: 50, 
                     fontWeight: FontWeight.w700,
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Text(
-                  "subtitle",
+                  "아이디는 24(학번)",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 250,),
                 LoginTextField(loginIdController: loginIdController),
                 SizedBox(height: 50,),
-                OutlinedButton(onPressed: onLoginAttempt, child: Text("Confirm")),
+                OutlinedButton(onPressed: onLoginAttempt, child: Text("로그인")),
                 Text(_textMsg,)
               ],
             ),
@@ -137,7 +137,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
-        labelText: 'Enter your ID',
+        labelText: '아이디를 입력하세요..',
         hintText: 'ex)242511',
       ),
     );
