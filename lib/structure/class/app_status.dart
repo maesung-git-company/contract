@@ -1,4 +1,4 @@
-import 'package:contract/structure/enum/pedestrian_status.dart';
+import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 
 class AppStatus {
   CustomPedestrianStatus pedestrianStatus = CustomPedestrianStatus.unknown;

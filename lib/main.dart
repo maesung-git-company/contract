@@ -1,5 +1,8 @@
+
+import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/manager/s_pref_manager.dart';
+import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/widget/main_app/main_app.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,30 +15,19 @@ bool userLoggedIn = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await overallInit();
-  grantPermission();
 
-  //debug();
+  grantPermission();
+  await overallInit();
+  await attemptLogin();
 
   runApp(Contract());
 }
 
-Future<void> debug() async {
-  Global.prefs.remove("user_id");
-}
-
 Future<void> overallInit() async {
-  // global
   Global.serverManager = ServerManagerSupabase() as ServerManagerI;
-  Global.prefs = await SharedPreferences.getInstance();
+  await Global.serverManager.connectDB();
 
-  await Global.serverManager.initDB();
-
-  int? userId = Global.prefs.getInt('user_id');
-  if (userId != null) {
-    Global.userData = await Global.serverManager.retrieveUserData(userId);
-    userLoggedIn = true;
-  }
+  await SPrefManager.init();
 }
 
 Future<void> grantPermission() async {
@@ -49,12 +41,21 @@ class Contract extends StatefulWidget {
   State<Contract> createState() => _ContractState();
 }
 
+Future<void> attemptLogin() async {
+  final UserData? savedUserData = SPrefManager.getSavedUserData();
+  if (savedUserData == null) return;
+  userLoggedIn = true;
+
+  DataStorage.userData = savedUserData;
+  await DataStorage.tryUpdateUserData();
+}
+
 class _ContractState extends State<Contract> {
   @override
   Widget build(BuildContext context) {
     late Widget page;
 
-    page = userLoggedIn
+    page = (userLoggedIn)
         ? MainApp()
         : LoginPage();
 

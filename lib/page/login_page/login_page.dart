@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/manager/s_pref_manager.dart';
 import 'package:contract/widget/main_app/main_app.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/global.dart';
-import '../../structure/class/user_data.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,16 +36,17 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    Global.serverManager.retrieveUserData(userId).then((value) {
-      onLoginSuccess(value);
-    }).catchError((error) {
+    bool success = await DataStorage.tryInitUserData(userId);
+    if (success) {
+      onLoginSuccess();
+    }
+    else {
       onLoginFail();
-    });
+    }
   }
 
-  onLoginSuccess(UserData userData) {
-    Global.prefs.setInt('user_id', userData.id);
-    Global.userData = userData;
+  onLoginSuccess() {
+    SPrefManager.saveUserData(DataStorage.userData);
 
     Navigator.pushReplacement(
       context,

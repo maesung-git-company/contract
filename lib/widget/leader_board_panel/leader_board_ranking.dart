@@ -1,6 +1,7 @@
+import 'package:contract/core/data_storage.dart';
+// ignore: unused_import
 import 'package:contract/core/global.dart';
 import 'package:contract/structure/class/user_data.dart';
-import 'package:contract/structure/util/data_processor.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -13,37 +14,25 @@ class LeaderBoardRanking extends StatefulWidget {
 }
 
 class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
-  List<UserData>? classmatesDataSorted;
-
   @override
-  void initState() {
-    super.initState();
-    Global.userData.addListener(this, () {
-      updateClassmatesData();
-    });
-    updateClassmatesData();
-  }
-
-  void updateClassmatesData() {
-    getClassmatesSortedBySteps().then((List<UserData> cmd) {
-      if (!mounted) return;
-      setState(() {
-        classmatesDataSorted = cmd;
-      });
-    });
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
   }
 
   @override
   Widget build(BuildContext context) {
     final List<RankRow> rankRows = [
-      RankRow(head: "1st", id: extractIdSafely(classmatesDataSorted, 0)),
-      RankRow(head: "2nd", id: extractIdSafely(classmatesDataSorted, 1)),
-      RankRow(head: "3rd", id: extractIdSafely(classmatesDataSorted, 2))
+      RankRow(head: "1st", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 0)),
+      RankRow(head: "2nd", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 1)),
+      RankRow(head: "3rd", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 2))
     ];
 
     return SkeletonSafe(
-      inspectList: [classmatesDataSorted],
-      onDisabled: updateClassmatesData,
+      inspectList: [DataStorage.classmatesDataSortedBySteps],
+      onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
+      reloadAfterMillisecond: 1000,
+      reloadCallback: () { setState(() {}); },
       child: Flexible(
         flex: 1,
         child: Column(
@@ -64,7 +53,7 @@ class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
 }
 
 String extractIdSafely(List<UserData>? x, int idx) {
-  return x != null ? x[idx].id.toString() : "-";
+  return x != null ? x[idx].id.toString() : "000000";
 }
 
 class RankRow extends StatelessWidget {

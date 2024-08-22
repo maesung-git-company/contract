@@ -1,4 +1,4 @@
-import '../enum/pedestrian_status.dart';
+import '../enum/custom_pedestrian_status.dart';
 
 final Map<String, CustomPedestrianStatus> _pedestrianStatusDict = {
   'walking': CustomPedestrianStatus.walking,

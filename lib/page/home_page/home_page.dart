@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
-import 'package:contract/structure/enum/pedestrian_status.dart';
+import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget/leader_board_panel/leader_board_panel.dart';
 import 'package:contract/widget/progress_panel/progress_panel.dart';
@@ -33,20 +34,17 @@ class _HomePageState extends State<HomePage> {
     initTimer();
   }
 
-  void initTimer() {
+  void initTimer() { // todo mainapp으로
     activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
       final as = Global.appStatus;
 
       if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
 
-      Global.userData.secondsActive += 1;
+      DataStorage.userData.secondsActive += 1;
     });
 
-    userDataSyncer = Timer.periodic(Duration(seconds: 5), (timer) {
-      Global.userData.onUpdate();
-      // onUpdate() method is for when userData is modified
-      // but this time i'm calling it manually so the app can sync with the server
-      Global.serverManager.updateUserData();
+    userDataSyncer = Timer.periodic(Duration(seconds: 60 * 5), (timer) {
+      print("하하"); // todo IMPL
     });
   }
 

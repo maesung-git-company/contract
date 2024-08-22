@@ -1,37 +1,17 @@
-import 'package:contract/structure/class/user_data.dart';
 
-import '../../core/global.dart';
-import 'interface_organization.dart';
 
-class ClassData implements OrganizationI {
-  @override
+class ClassData {
   late final String uuid;
-
-  @override
   late final String name;
+  late final List<int> usersId;
+  late int latestSumOfSteps;
+  late DateTime latestSumWhen;
 
-  @override
-  Future<int> getTotalStep() async {
-    final sm = Global.serverManager;
-
-    final DateTime dt = await sm.getClassLatestSumWhen(uuid);
-    final difference = DateTime.now().difference(dt);
-
-    int res;
-
-    if (difference.inMinutes > 1) {
-      int sum = 0;
-      List<UserData> uds = await sm.getUserDatasOfClass(uuid);
-
-      for (final ud in uds) { sum += ud.steps; }
-
-      sm.updateClassLatestTotalSteps(uuid, sum);
-      res = sum;
-    }
-    else {
-      res = await sm.getLatestClassTotalSteps(uuid);
-    }
-
-    return res;
-  }
+  ClassData({
+    required this.uuid,
+    required this.name,
+    required this.usersId,
+    required this.latestSumOfSteps,
+    required this.latestSumWhen,
+  });
 }

@@ -1,8 +1,6 @@
 import 'package:contract/core/config.dart';
-import 'package:contract/core/global.dart';
-import 'package:contract/structure/class/class_data.dart';
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/structure/class/user_data.dart';
-import 'package:contract/structure/util/data_processor.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/material.dart';
@@ -17,60 +15,22 @@ class ClassStatPage extends StatefulWidget {
 }
 
 class _ClassStatPageState extends State<ClassStatPage> {
-  List<UserData>? classmatesDataSorted;
-  ClassData? classData;
-  int? totalSteps;
-
   @override
-  void initState() {
-    super.initState();
-    Global.userData.addListener(this, () {
-      updateClassmatesSortedBySteps();
-      updateTotalStep();
-      updateClassData();
-    });
-    updateClassmatesSortedBySteps();
-    updateTotalStep();
-    updateClassData();
-  }
-
-  void updateClassData() {
-    Global.serverManager.getBelongClasses(Global.userData.id).then((List<ClassData> cd) {
-      if (!mounted) return;
-      setState(() {
-        classData = cd[0];
-      });
-    });
-  }
-
-  void updateClassmatesSortedBySteps() {
-    getClassmatesSortedBySteps().then((List<UserData> cmd) {
-      if (!mounted) return;
-      setState(() {
-        classmatesDataSorted = cmd;
-      });
-    });
-  }
-
-  void updateTotalStep() {
-    Global.serverManager.getBelongClasses(Global.userData.id).then((List<ClassData> cdList) {
-      return cdList[0].getTotalStep();
-    }).then((int totalStep) {
-      if (!mounted) return;
-      setState(() {
-        totalSteps = totalStep;
-      });
-    });
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
   }
 
   @override
   Widget build(BuildContext context) {
     final List<ClassStatRankRow> classStatRankRows = [];
 
-    if (classmatesDataSorted != null) {
-      for (int i = 0; i < classmatesDataSorted!.length; i++) {
+    final cmatesDatas = DataStorage.classmatesDataSortedBySteps;
+
+    if (cmatesDatas != null) {
+      for (int i = 0; i < cmatesDatas.length; i++) {
         classStatRankRows.add(
-            ClassStatRankRow(user: classmatesDataSorted![i], rank: i + 1,)
+            ClassStatRankRow(user: cmatesDatas[i], rank: i + 1,)
         );
       }
     }
@@ -96,22 +56,22 @@ class _ClassStatPageState extends State<ClassStatPage> {
                   ],
                 ),
                 child: SkeletonSafe(
-                  inspectList: [classData],
-                  onDisabled: updateClassData,
+                  inspectList: [DataStorage.classData],
+                  onDisabled: DataStorage.tryUpdateClassData,
                   child: Column(
                     children: [
                       Text(
-                        "${classData?.name}",
+                        DataStorage.classData!.name,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SkeletonSafe(
-                        inspectList: [totalSteps],
-                        onDisabled: updateTotalStep,
+                        inspectList: [DataStorage.classData],
+                        onDisabled: DataStorage.tryUpdateClassData,
                         child: Text(
-                          "총 $totalSteps걸음",
+                          "총 ${DataStorage.classData!.latestSumOfSteps}걸음",
                         ),
                       ),
                     ]
@@ -119,26 +79,24 @@ class _ClassStatPageState extends State<ClassStatPage> {
                 ),
               ),
               SkeletonSafe(
-                inspectList: [classmatesDataSorted],
-                onDisabled: updateClassmatesSortedBySteps,
+                inspectList: [DataStorage.classmatesDataSortedBySteps],
+                onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
+                reloadAfterMillisecond: 1000,
+                reloadCallback: () => { setState(() => {}) },
                 pseudoLayout: Column(
                   children: [ // lol
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
-                    ClassStatRankRow(user: Global.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
                   ],
                 ),
-                child: SkeletonSafe(
-                  inspectList: [classmatesDataSorted],
-                  onDisabled: updateClassmatesSortedBySteps,
-                  child: Column(
-                    children: classStatRankRows,
-                  ),
+                child: Column(
+                  children: classStatRankRows,
                 ),
               )
             ],

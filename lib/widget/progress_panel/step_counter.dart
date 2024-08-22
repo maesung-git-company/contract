@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:contract/structure/enum/pedestrian_status.dart';
+import 'package:contract/core/data_storage.dart';
+import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
@@ -15,7 +16,7 @@ class StepCounter extends StatefulWidget {
   State<StepCounter> createState() => _StepCounterState();
 }
 
-class _StepCounterState extends State<StepCounter> {
+class _StepCounterState extends State<StepCounter> { // todo refactoring
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String? _displayedText;
@@ -31,7 +32,7 @@ class _StepCounterState extends State<StepCounter> {
   void initState() {
     super.initState();
     initPlatformState();
-    _displayedText = Global.userData.steps.toString();
+    _displayedText = DataStorage.userData.steps.toString();
   }
 
   void initPlatformState() {
@@ -47,14 +48,14 @@ class _StepCounterState extends State<StepCounter> {
   }
 
   void onStepCount(StepCount event) {
-    Global.userData.steps += 1;
+    DataStorage.userData.steps += 1;
 
     setState(() {
-      _displayedText = Global.userData.steps.toString();
+      _displayedText = DataStorage.userData.steps.toString();
     });
   }
 
-   void onStepCountError(error) {
+  void onStepCountError(error) {
     // setState(() {
     //   _displayedText = "Error";
     // });

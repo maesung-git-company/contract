@@ -1,6 +1,4 @@
-import 'package:contract/core/global.dart';
-import 'package:contract/structure/class/user_data.dart';
-import 'package:contract/structure/util/data_processor.dart';
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,30 +12,19 @@ class LeaderBoardRank extends StatefulWidget {
 }
 
 class _LeaderBoardRankState extends State<LeaderBoardRank> {
-  List<UserData>? classmatesDataSorted;
-
   @override
-  void initState() {
-    super.initState();
-    Global.userData.addListener(this, () {
-      updateClassmatesData();
-    });
-    updateClassmatesData();
-  }
-
-  void updateClassmatesData() {
-    getClassmatesSortedBySteps().then((List<UserData> cmd) {
-      if (!mounted) return;
-      setState(() {
-        classmatesDataSorted = cmd;
-      });
-    });
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
   }
 
   @override
   Widget build(BuildContext context) {
     return SkeletonSafe(
-      inspectList: [classmatesDataSorted],
+      inspectList: [DataStorage.classmatesDataSortedBySteps],
+      onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
+      reloadAfterMillisecond: 1000,
+      reloadCallback: () { setState() {} },
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,11 +71,8 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      "${classmatesDataSorted != null
-                          ? classmatesDataSorted!.indexWhere((user) =>
-                      user.id == Global.userData.id) + 1
-                          : "-"}",
+                    Text((DataStorage.classmatesDataSortedBySteps!
+                        .indexWhere((user) => user.id == DataStorage.userData.id) + 1).toString(),
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -97,7 +81,7 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
                       width: 5,
                     ),
                     Text(
-                      "th",
+                      "th", // todo st nd rd th
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade600,

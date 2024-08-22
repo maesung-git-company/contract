@@ -1,3 +1,5 @@
+import 'package:contract/core/data_storage.dart';
+// ignore: unused_import
 import 'package:contract/core/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +13,6 @@ class WorkoutStopwatchPanel extends StatefulWidget {
 }
 
 class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
-  @override
-  void initState() {
-    super.initState();
-    Global.userData.addListener(this, () { setState(() {}); });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,8 +30,8 @@ class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
           child: Row(
             children: [
               Text(
-                "${addPadding(Global.userData.secondsActive ~/ (60 * 60), 2)}"
-                    ":${addPadding(Global.userData.secondsActive ~/ 60, 2)}",
+                "${addPadding(DataStorage.userData.secondsActive ~/ (60 * 60), 2)}"
+                    ":${addPadding(DataStorage.userData.secondsActive ~/ 60, 2)}",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,

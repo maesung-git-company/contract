@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class SchoolStatPage extends StatefulWidget {
+class SchoolStatPage extends StatefulWidget { // todo
   const SchoolStatPage({super.key});
 
   @override
@@ -10,6 +10,6 @@ class SchoolStatPage extends StatefulWidget {
 class _SchoolStatPageState extends State<SchoolStatPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Placeholder();
   }
 }

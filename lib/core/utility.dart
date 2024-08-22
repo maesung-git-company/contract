@@ -7,11 +7,10 @@
 
 // mostly
 
-import 'global.dart';
+import 'package:contract/core/manager/s_pref_manager.dart';
 
 class Utility {
   static void logOut() {
-    Global.prefs.remove("user_id");
-
+    SPrefManager.deleteSavedUserData();
   }
 }
