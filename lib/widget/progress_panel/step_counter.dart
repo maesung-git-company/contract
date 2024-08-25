@@ -16,7 +16,7 @@ class StepCounter extends StatefulWidget {
   State<StepCounter> createState() => _StepCounterState();
 }
 
-class _StepCounterState extends State<StepCounter> { // todo refactoring
+class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String? _displayedText;

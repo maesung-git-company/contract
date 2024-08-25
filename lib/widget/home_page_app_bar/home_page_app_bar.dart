@@ -29,7 +29,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.grey.shade500,
         ),
       ),
-      title: const Text('Step Counter'),
+      title: const Text('매성 그린워킹'),
     );
   }
 
