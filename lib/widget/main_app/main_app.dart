@@ -37,7 +37,7 @@ class _MainAppState extends State<MainApp> {
     });
 
     userDataSyncer = Timer.periodic(Duration(seconds: 60 * 5), (timer) {
-      print("하하"); // todo IMPL
+      print("하하"); // todo IMPL upload periodically
     });
   }
 

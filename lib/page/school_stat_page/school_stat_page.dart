@@ -17,12 +17,13 @@ class _SchoolStatPageState extends State<SchoolStatPage> {
         appBar: HomePageAppBar(),
         body: Container(
           color: Colors.grey[200],
-          child: ListView(
+          child: Column(
             children: [
               Flexible(
                 flex: 4,
                 child: Container(
                   color: Colors.red,
+                  width: double.infinity,
                 )
               ),
               Flexible(

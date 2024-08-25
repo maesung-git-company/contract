@@ -1,6 +1,7 @@
 import 'package:contract/core/config.dart';
 import 'package:contract/core/data_storage.dart';
 import 'package:contract/structure/class/user_data.dart';
+import 'package:contract/structure/util/nullObjSafe.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _ClassStatPageState extends State<ClassStatPage> {
                   child: Column(
                     children: [
                       Text(
-                        DataStorage.classData!.name,
+                        nullObjSafe(DataStorage.classData).name,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
@@ -71,7 +72,7 @@ class _ClassStatPageState extends State<ClassStatPage> {
                         inspectList: [DataStorage.classData],
                         onDisabled: DataStorage.tryUpdateClassData,
                         child: Text(
-                          "총 ${DataStorage.classData!.latestSumOfSteps}걸음",
+                          "총 ${nullObjSafe(DataStorage.classData).latestSumOfSteps}걸음",
                         ),
                       ),
                     ]
