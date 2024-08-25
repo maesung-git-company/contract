@@ -41,14 +41,15 @@ class _SkeletonSafeState extends State<SkeletonSafe> {
   Widget build(BuildContext context) {
     bool skeletonizerEnabled = widget.inspectList.contains(null);
 
-    if (!skeletonizerEnabled) {
-      if (widget.onDisabled != null) widget.onDisabled!();
-      if (widget.reloadAfterMillisecond != null){
-        Timer(
+    if (skeletonizerEnabled && widget.onDisabled != null) {
+      widget.onDisabled!();
+    }
+
+    if (skeletonizerEnabled && widget.reloadAfterMillisecond != null) {
+      Timer(
           Duration(milliseconds: widget.reloadAfterMillisecond!),
           widget.reloadCallback!
-        );
-      }
+      );
     }
 
     Widget child = skeletonizerEnabled && (widget.pseudoLayout != null)

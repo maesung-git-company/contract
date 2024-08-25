@@ -1,16 +1,21 @@
 
+import 'dart:math';
+
+// ignore: unused_import
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/manager/server/interface_server_manager.dart';
 import 'package:contract/structure/class/class_data.dart';
+import 'package:contract/structure/class/school_data.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
- // todo return null 처리
+
 class ServerManagerSupabase implements ServerManagerI {
   static var supabase;
 
   @override
-  Future<void> connectDB() async { // todo connect
+  Future<void> connectDB() async {
     await dotenv.load(fileName: 'assets/config/.env');
     
     await Supabase.initialize(
@@ -23,68 +28,63 @@ class ServerManagerSupabase implements ServerManagerI {
 
   @override
   Future<Map<String, dynamic>> getUserDataRaw(int userId) async {
-    final data = await supabase
-        .from('user_data')
+    final rawData = await supabase
+        .from('user')
         .select()
         .eq('id', userId)
         .single();
 
-    return data;
+    return rawData;
   }
 
   @override
   Future<UserData> retrieveUserData(int userId) async {
-    final data = await getUserDataRaw(userId);
+    final rawData = await getUserDataRaw(userId);
 
     UserData userData = UserData(
       id: userId,
-      steps: data['steps'],
-      secondsActive: data['seconds_active'],
-      belongClassId: data['belong_class_id']
+      steps: rawData['steps'],
+      secondsActive: rawData['seconds_active'],
+      belongClassId: rawData['belong_class_id']
     );
 
     return userData;
   }
 
-  // @override
-  // updateUserData() async {
-  //   final oldUserData = await retrieveUserData(DataStorage.userData?.id);
-  //
-  //   UserData ud = Global.userData;
-  //
-  //   ud.steps = max(ud.steps, oldUserData.steps);
-  //   ud.secondsActive = max(ud.secondsActive, oldUserData.secondsActive);
-  //
-  //   await _supabase
-  //       .from('user_data')
-  //       .update({
-  //         'steps': ud.steps,
-  //         'seconds_active': ud.secondsActive
-  //       })
-  //       .eq('id', ud.id);
-  // }
+  @override
+  uploadUserData(UserData userData) async {
+    final serverUserData = await retrieveUserData(userData.id);
+
+    await supabase
+        .from('user')
+        .update({
+          'steps': max(userData.steps, serverUserData.steps),
+          'seconds_active': max(userData.secondsActive, serverUserData.secondsActive)
+        })
+        .eq('id', userData.id);
+  }
 
   @override
   Future<Map<String, dynamic>> getClassDataRaw(String uuid) async {
-    final data = await supabase
+    final rawData = await supabase
         .from('class')
         .select()
         .eq('id', uuid)
         .single();
 
-    return data;
+    return rawData;
   }
 
   @override
   Future<ClassData> retrieveClassData(String uuid) async {
-    final data = await getClassDataRaw(uuid);
+    final rawData = await getClassDataRaw(uuid);
 
     ClassData res = ClassData(
       uuid: uuid,
-      name: data['name'],
-      usersId: List<int>.from(data['users_id'] as List),
-      latestSumOfSteps: data['latest_sum_of_steps'],
-      latestSumWhen: DateTime.parse(data['latest_sum_when'])
+      name: rawData['name'],
+      usersId: List<int>.from(rawData['users_id'] as List),
+      latestSumOfSteps: rawData['latest_sum_of_steps'],
+      latestSumWhen: DateTime.parse(rawData['latest_sum_when'])
     );
 
     return res;
@@ -103,12 +103,68 @@ class ServerManagerSupabase implements ServerManagerI {
 
   @override
   Future<void> uploadClassData(ClassData classData) async {
+    final serverClassData = await retrieveClassData(classData.uuid);
+
     await supabase
       .from('class')
       .update({
-        'latest_sum_of_steps': classData.latestSumOfSteps,
-        'latest_sum_when': classData.latestSumWhen
+        'latest_sum_of_steps': max(classData.latestSumOfSteps, serverClassData.latestSumOfSteps),
+        'latest_sum_when': classData.latestSumWhen.isAfter(serverClassData.latestSumWhen)
+          ? classData.latestSumWhen
+          : serverClassData.latestSumWhen
       })
       .eq('id', classData.uuid);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getSchoolDataRaw(String uuid) async {
+    final data = await supabase
+        .from('school')
+        .select()
+        .eq('uuid', uuid)
+        .single();
+
+    return data;
+  }
+
+  @override
+  Future<SchoolData> retrieveSchoolData(String uuid) async {
+    final rawData = await getSchoolDataRaw(uuid);
+
+    SchoolData schoolData = SchoolData(
+        uuid: rawData['uuid'],
+        name: rawData['name'],
+        classesUuid: rawData['classes_uuid'],
+        latestSumOfSteps: rawData['latest_sum_of_steps'],
+        latestSumWhen: rawData['latest_sum_when']
+    );
+
+    return schoolData;
+  }
+
+  @override
+  Future<List<ClassData>> getClassDatasOfSchool(SchoolData schoolData) async {
+    List<ClassData> res = [];
+
+    for (final String uuid in schoolData.classesUuid) {
+      res.add(await retrieveClassData(uuid));
+    }
+
+    return res;
+  }
+
+  @override
+  Future<void> uploadSchoolData(SchoolData schoolData) async {
+    final serverSchoolData = await retrieveSchoolData(schoolData.uuid);
+
+    await supabase
+      .from('class')
+      .update({
+        'latest_sum_of_steps': max(schoolData.latestSumOfSteps, serverSchoolData.latestSumOfSteps),
+        'latest_sum_when': schoolData.latestSumWhen.isAfter(serverSchoolData.latestSumWhen)
+          ? schoolData.latestSumWhen
+          : serverSchoolData.latestSumWhen
+      })
+      .eq('id', schoolData.uuid);
   }
 }

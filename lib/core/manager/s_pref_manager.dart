@@ -36,7 +36,7 @@ class SPrefManager {
 
   static Future<void> saveUserData(UserData userData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     prefs.setInt(PrefName.userId, userData.id);
     prefs.setInt(PrefName.userSteps, userData.steps);
     prefs.setInt(PrefName.userSecondsActive, userData.secondsActive);

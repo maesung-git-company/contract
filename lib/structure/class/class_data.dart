@@ -1,5 +1,3 @@
-
-
 class ClassData {
   late final String uuid;
   late final String name;

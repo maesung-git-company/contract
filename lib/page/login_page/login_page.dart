@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:math';
 
 import 'package:contract/core/data_storage.dart';
@@ -138,7 +139,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: '아이디를 입력하세요..',
-        hintText: 'ex)24251',
+        hintText: 'ex)242216',
       ),
     );
   }

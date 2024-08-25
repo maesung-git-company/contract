@@ -2,12 +2,12 @@ class UserData {
   late int id;
   late int steps;
   late int secondsActive;
-  late final String belongClassId;
+  late String belongClassId;
 
   UserData({
-    required int id,
-    required int steps,
-    required int secondsActive,
-    required String belongClassId
+    required this.id,
+    required this.steps,
+    required this.secondsActive,
+    required this.belongClassId
   });
 }

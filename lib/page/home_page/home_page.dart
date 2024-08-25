@@ -1,8 +1,4 @@
-import 'dart:async';
 
-import 'package:contract/core/data_storage.dart';
-import 'package:contract/core/global.dart';
-import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget/leader_board_panel/leader_board_panel.dart';
 import 'package:contract/widget/progress_panel/progress_panel.dart';
@@ -25,29 +21,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Timer activityTracker;
-  late Timer userDataSyncer;
-
-  @override
-  void initState() {
-    super.initState();
-    initTimer();
-  }
-
-  void initTimer() { // todo mainapp으로
-    activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
-      final as = Global.appStatus;
-
-      if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
-
-      DataStorage.userData.secondsActive += 1;
-    });
-
-    userDataSyncer = Timer.periodic(Duration(seconds: 60 * 5), (timer) {
-      print("하하"); // todo IMPL
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -97,12 +70,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    activityTracker.cancel();
-    userDataSyncer.cancel();
-    super.dispose();
   }
 }

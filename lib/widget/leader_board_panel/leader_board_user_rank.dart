@@ -1,17 +1,18 @@
 import 'package:contract/core/data_storage.dart';
+import 'package:contract/structure/util/nullObjSafe.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class LeaderBoardRank extends StatefulWidget {
-  const LeaderBoardRank({super.key});
+class LeaderBoardUserRank extends StatefulWidget {
+  const LeaderBoardUserRank({super.key});
 
   @override
-  State<LeaderBoardRank> createState() => _LeaderBoardRankState();
+  State<LeaderBoardUserRank> createState() => _LeaderBoardUserRankState();
 }
 
-class _LeaderBoardRankState extends State<LeaderBoardRank> {
+class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
   @override
   void setState(VoidCallback fn) {
     if (!mounted) return;
@@ -20,11 +21,14 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
 
   @override
   Widget build(BuildContext context) {
+    final int ranking = (nullObjSafe(DataStorage.classmatesDataSortedBySteps)
+        .indexWhere((user) => user.id == DataStorage.userData.id) + 1);
+
     return SkeletonSafe(
       inspectList: [DataStorage.classmatesDataSortedBySteps],
       onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
       reloadAfterMillisecond: 1000,
-      reloadCallback: () { setState() {} },
+      reloadCallback: () { setState(() {}); },
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -71,8 +75,7 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text((DataStorage.classmatesDataSortedBySteps!
-                        .indexWhere((user) => user.id == DataStorage.userData.id) + 1).toString(),
+                    Text(ranking.toString(),
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -81,7 +84,7 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
                       width: 5,
                     ),
                     Text(
-                      "th", // todo st nd rd th
+                      getOrderPostfix(ranking),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade600,
@@ -96,4 +99,9 @@ class _LeaderBoardRankState extends State<LeaderBoardRank> {
       ),
     );
   }
+}
+
+String getOrderPostfix(int ranking) {
+  if (ranking <= 3) return ["st", "nd", "rd"][ranking];
+  return "th";
 }

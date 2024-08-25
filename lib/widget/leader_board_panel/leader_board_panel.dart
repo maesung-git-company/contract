@@ -1,4 +1,4 @@
-import 'package:contract/widget/leader_board_panel/leader_board_rank.dart';
+import 'package:contract/widget/leader_board_panel/leader_board_user_rank.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -26,7 +26,7 @@ class _LeaderBoardPanelState extends State<LeaderBoardPanel> {
         children: [
           Flexible(
             flex: 1,
-            child: LeaderBoardRank(),
+            child: LeaderBoardUserRank(),
           ),
           Flexible(
             flex: 1,

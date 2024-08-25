@@ -6,13 +6,13 @@ import 'package:contract/structure/class/user_data.dart';
 
 import 'global.dart';
 
-class DataStorage {
+class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData도
   static late UserData userData;
   static ClassData? classData;
   static SchoolData? schoolData;
 
   static List<UserData>? classmatesDataSortedBySteps;
-  // todo 업데이트 한지 지난 시간 타이머
+
   static Future<bool> tryUpdateUserData() async {
     try {
       final UserData updatedUserData = await Global.serverManager.retrieveUserData(userData.id);
@@ -38,6 +38,7 @@ class DataStorage {
         if (upload) tryUploadClassData();
       }
 
+      // apply db data to local
       if (classData == null) {
         classData = updatedClassData;
         return true;
@@ -56,13 +57,32 @@ class DataStorage {
   static Future<bool> tryUpdateClassmatesDataSortedBySteps() async {
     try {
       final sm = Global.serverManager;
-      final ClassData classData = DataStorage.classData!;
+
+      if (DataStorage.classData == null) {
+        await tryUpdateClassData();
+      }
+
+      if (DataStorage.classData == null) {
+        return false;
+      }
 
       List<UserData> res =
-      await sm.getUserDatasOfClass(classData);
+      await sm.getUserDatasOfClass(classData!);
 
       res.sort((a, b) => b.steps.compareTo(a.steps));
 
+      classmatesDataSortedBySteps = res;
+
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> tryUploadUserData() async {
+    try {
+      await Global.serverManager.uploadUserData(DataStorage.userData);
       return true;
     }
     catch (e) {
