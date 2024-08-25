@@ -26,8 +26,6 @@ Future<void> main() async {
 Future<void> overallInit() async {
   Global.serverManager = ServerManagerSupabase() as ServerManagerI;
   await Global.serverManager.connectDB();
-
-  await SPrefManager.init();
 }
 
 Future<void> grantPermission() async {
@@ -42,7 +40,7 @@ class Contract extends StatefulWidget {
 }
 
 Future<void> attemptLogin() async {
-  final UserData? savedUserData = SPrefManager.getSavedUserData();
+  final UserData? savedUserData = await SPrefManager.getSavedUserData();
   if (savedUserData == null) return;
   userLoggedIn = true;
 

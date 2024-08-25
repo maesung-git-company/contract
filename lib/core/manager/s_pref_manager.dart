@@ -2,27 +2,23 @@ import 'package:contract/structure/class/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SPrefManager {
-  static late final UserData? _savedUserData;
-
-  static Future<void> init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  static Future<UserData?> getSavedUserData() async {
     try {
-      _savedUserData = UserData(
-        id: prefs.getInt(PrefName.userId)!,
-        steps: prefs.getInt(PrefName.userId)!,
-        secondsActive: prefs.getInt(PrefName.userId)!,
-        belongClassId: prefs.getString(PrefName.userSecondsActive)!
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      UserData userData = UserData(
+          id: prefs.getInt(PrefName.userId)!,
+          steps: prefs.getInt(PrefName.userSteps)!,
+          secondsActive: prefs.getInt(PrefName.userSecondsActive)!,
+          belongClassId: prefs.getString(PrefName.userBelongClassId)!
       );
+
+      return userData;
     }
     catch (e) {
       deleteSavedUserData();
-      _savedUserData = null;
+      return null;
     }
-  }
-
-  static UserData? getSavedUserData() {
-    return _savedUserData;
   }
 
   static Future<void> deleteSavedUserData() async {
