@@ -54,7 +54,7 @@ class _MainAppState extends State<MainApp> {
       pages: [
         HomePage(),
         ClassStatPage(),
-        SchoolStatPage(),
+        // SchoolStatPage(),
       ],
       initialPageIndex: 0,
     );

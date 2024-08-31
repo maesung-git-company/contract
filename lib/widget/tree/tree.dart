@@ -11,6 +11,12 @@ class Tree extends StatefulWidget {
 
 class _TreeState extends State<Tree> {
   @override
+  void initState() {
+    DataStorage.userData.addListener(this, () { setState(() {}); });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
