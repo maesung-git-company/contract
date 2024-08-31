@@ -1,3 +1,5 @@
+import 'package:contract/core/config.dart';
+import 'package:contract/core/data_storage.dart';
 import 'package:flutter/cupertino.dart';
 
 class Tree extends StatefulWidget {
@@ -9,11 +11,30 @@ class Tree extends StatefulWidget {
 
 class _TreeState extends State<Tree> {
   @override
-  Widget build(BuildContext context) {  // todo jeery 그림추가
-    return SizedBox(
-      child: Center(
-        child: Text(''),
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: double.infinity,
+        child: Image(
+          image: getTreeImgByProgress(),
+          fit: BoxFit.cover,
+        )
       ),
     );
   }
+}
+
+
+AssetImage getTreeImgByProgress() {
+  double progress = DataStorage.userData.steps % Config.stepRequiredPerTree
+      / Config.stepRequiredPerTree;
+
+  String path = [
+    'assets/images/tree1.png',
+    'assets/images/tree2.png',
+    'assets/images/tree3.png',
+    'assets/images/tree4.png'
+  ][(progress * 4).toInt()];
+
+  return AssetImage(path);
 }
