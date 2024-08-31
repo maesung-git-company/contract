@@ -13,7 +13,17 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
 
   static List<UserData>? classmatesDataSortedBySteps;
 
+  static final Map<Data, bool> updating = {
+    Data.userData: false,
+    Data.classData: false,
+    Data.schoolData: false,
+    Data.classmatesDataSortedBySteps: false,
+  };
+
   static Future<bool> tryUpdateUserData() async {
+    if (updating[Data.userData]!) return false;
+    updating[Data.userData] = true;
+
     try {
       final UserData updatedUserData = await Global.serverManager.retrieveUserData(userData.id);
       userData.steps = max(userData.steps, updatedUserData.steps);
@@ -23,10 +33,15 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
     catch (e) {
       return false;
     }
+    finally {
+      updating[Data.userData] = false;
+    }
   }
 
   static Future<bool> tryUpdateClassData({bool upload = false}) async {
-    print("클래스업뎃!!!"); // todo remove
+    if (updating[Data.classData]!) return false;
+    updating[Data.classData] = true;
+
     try {
       final ClassData updatedClassData = await Global.serverManager.retrieveClassData(userData.belongClassId);
 
@@ -52,9 +67,15 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
     catch (e) {
       return false;
     }
+    finally {
+      updating[Data.classData] = false;
+    }
   }
 
   static Future<bool> tryUpdateClassmatesDataSortedBySteps() async {
+    if (updating[Data.classmatesDataSortedBySteps]!) return false;
+    updating[Data.classmatesDataSortedBySteps] = true;
+
     try {
       final sm = Global.serverManager;
 
@@ -77,6 +98,9 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
     }
     catch (e) {
       return false;
+    }
+    finally {
+      updating[Data.classmatesDataSortedBySteps] = false;
     }
   }
 
@@ -120,4 +144,11 @@ Future<int> getTotalStepsOfClass(ClassData classData) async {
   for (final ud in userDatas) { sum += ud.steps; }
 
   return sum;
+}
+
+enum Data {
+  userData,
+  classData,
+  schoolData,
+  classmatesDataSortedBySteps,
 }
