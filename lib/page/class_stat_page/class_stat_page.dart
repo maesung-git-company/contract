@@ -38,7 +38,7 @@ class _ClassStatPageState extends State<ClassStatPage> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: HomePageAppBar(), // todo jeery 앱바수정
+        appBar: HomePageAppBar(),
         body: Container(
           color: Colors.grey[200],
           child: ListView(

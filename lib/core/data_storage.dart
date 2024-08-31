@@ -124,6 +124,12 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
     }
   }
 
+  static Future<void> tryTotalUpdate() async { // todo 리로드 시 위젯도 업데이트
+    tryUpdateUserData();
+    tryUpdateClassData(upload: true);
+    tryUpdateClassmatesDataSortedBySteps();
+  }
+
   static Future<bool> tryInitUserData(int id) async {
     try {
       userData = await Global.serverManager.retrieveUserData(id);
