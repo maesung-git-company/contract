@@ -102,6 +102,6 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
 }
 
 String getOrderPostfix(int ranking) {
-  if (ranking <= 3) return ["st", "nd", "rd"][ranking];
+  if (ranking <= 3) return ["?", "st", "nd", "rd"][ranking];
   return "th";
 }
