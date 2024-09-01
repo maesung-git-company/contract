@@ -6,7 +6,7 @@ import 'package:contract/structure/class/user_data.dart';
 
 import 'global.dart';
 
-class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData도
+class DataStorage {
   static late UserData userData;
   static ClassData? classData;
   static SchoolData? schoolData;
@@ -128,6 +128,12 @@ class DataStorage { // todo 업데이트 버튼, 이거할때 tryUpdateClassData
     tryUpdateUserData();
     tryUpdateClassData(upload: true);
     tryUpdateClassmatesDataSortedBySteps();
+  }
+
+  static void totalDelete() {
+    classData = null;
+    classmatesDataSortedBySteps = null;
+    schoolData = null;
   }
 
   static Future<bool> tryInitUserData(int id) async {
