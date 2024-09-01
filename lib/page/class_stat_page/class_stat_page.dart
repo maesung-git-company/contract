@@ -137,11 +137,11 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
         child: Row(
           children: [
             Flexible(
-              flex: 2,
+              flex: 3,
               child: Container(
-                margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Center(
-                  child: Text("${widget.rank}등", // todo jeery 이거 좀 더 너비 줘야할듯
+                  child: Text("${widget.rank}등", // todo jeery 이거 좀 더 너비 줘야할듯 - 시마이
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold
@@ -155,7 +155,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
               child: Center(
                 child: Text(widget.user.id.toString(),
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey.shade600
                   ),
@@ -185,7 +185,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
               )
             ),
             Flexible(
-              flex: 3,
+              flex: 4,
               child: Center(
                 child: Text("${widget.user.steps}걸음",
                   style: TextStyle(

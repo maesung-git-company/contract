@@ -33,18 +33,12 @@ class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
       onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
       reloadAfterMillisecond: 1000,
       reloadCallback: () { setState(() {}); },
-      child: Column( // todo jeery 오버플로점ㅎ
-        children: [
-          SizedBox(  // todo jeery 이거 실행했을때 세로줄이 안맞는데 해결가능? - 확인좀 -
-            // todo - ㄴㄴ 아이디 숫자부분에서 세로로 줄 그었을때 맞는걸로 해줘
-            width: double.infinity,
-            height: 25,
-          ),
-          Column(
-            children: rankRows,
-          )
-        ],
-      ),
+      child: SizedBox(
+        height: 190,
+        child: Column(
+          children: rankRows,
+        ),
+      )
     );
   }
 }
@@ -62,32 +56,31 @@ class RankRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      margin: EdgeInsets.fromLTRB(25, 0, 0, 25),
-      child: Row(
-        children: [
-          Text(
-            head,
-            style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w700
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 7, 0, 0),
-            child: Text(
-              id,
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+        child: Row(
+          children: [
+            Text(
+              head,
               style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey.shade600,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700
               ),
             ),
-          )
-        ],
-      ),
-    );
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 7, 0, 0),
+              child: Text(
+                id,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
   }
 }

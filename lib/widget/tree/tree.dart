@@ -12,19 +12,22 @@ class Tree extends StatefulWidget {
 class _TreeState extends State<Tree> {
   @override
   void initState() {
-    DataStorage.userData.addListener(this, () { setState(() {}); });
+    DataStorage.userData.addListener(this, () {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
+      child: Container(
+        margin: EdgeInsets.fromLTRB(50, 20, 50, 20),
         width: double.infinity,
         child: Image(
           image: getTreeImgByProgress(),
           fit: BoxFit.cover,
-        )
+        ),
       ),
     );
   }
