@@ -1,11 +1,14 @@
 import 'package:contract/core/config.dart';
+// ignore: unused_import
 import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/global.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/structure/util/nullObjSafe.dart';
 import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ClassStatPage extends StatefulWidget {
@@ -26,7 +29,7 @@ class _ClassStatPageState extends State<ClassStatPage> {
   Widget build(BuildContext context) {
     final List<ClassStatRankRow> classStatRankRows = [];
 
-    final cmatesDatas = DataStorage.classmatesDataSortedBySteps;
+    final cmatesDatas = Global.ds.classmatesDataSortedBySteps;
 
     if (cmatesDatas != null) {
       for (int i = 0; i < cmatesDatas.length; i++) {
@@ -57,22 +60,22 @@ class _ClassStatPageState extends State<ClassStatPage> {
                   ],
                 ),
                 child: SkeletonSafe(
-                  inspectList: [DataStorage.classData],
-                  onDisabled: DataStorage.tryUpdateClassData,
+                  inspectList: [context.watch<DataStorage>().classData],
+                  onDisabled: Global.ds.tryUpdateClassData,
                   child: Column(
                     children: [
                       Text(
-                        nullObjSafe(DataStorage.classData).name,
+                        nullObjSafe(Global.ds.classData).name,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SkeletonSafe(
-                        inspectList: [DataStorage.classData],
-                        onDisabled: DataStorage.tryUpdateClassData,
+                        inspectList: [context.watch<DataStorage>().classData],
+                        onDisabled: Global.ds.tryUpdateClassData,
                         child: Text(
-                          "총 ${nullObjSafe(DataStorage.classData).latestSumOfSteps}걸음",
+                          "총 ${nullObjSafe(Global.ds.classData).latestSumOfSteps}걸음",
                         ),
                       ),
                     ]
@@ -80,20 +83,18 @@ class _ClassStatPageState extends State<ClassStatPage> {
                 ),
               ),
               SkeletonSafe(
-                inspectList: [DataStorage.classmatesDataSortedBySteps],
-                onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
-                reloadAfterMillisecond: 1000,
-                reloadCallback: () => { setState(() => {}) },
+                inspectList: [context.watch<DataStorage>().classmatesDataSortedBySteps],
+                onDisabled: Global.ds.tryUpdateClassmatesDataSortedBySteps,
                 pseudoLayout: Column(
                   children: [ // lol
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
-                    ClassStatRankRow(user: DataStorage.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
+                    ClassStatRankRow(user: Global.ds.userData, rank: 1),
                   ],
                 ),
                 child: Column(
@@ -141,7 +142,7 @@ class _ClassStatRankRowState extends State<ClassStatRankRow> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Center(
-                  child: Text("${widget.rank}등", // todo jeery 이거 좀 더 너비 줘야할듯 - 시마이
+                  child: Text("${widget.rank}등",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold

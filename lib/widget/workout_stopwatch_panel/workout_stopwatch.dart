@@ -1,4 +1,3 @@
-import 'package:contract/core/data_storage.dart';
 // ignore: unused_import
 import 'package:contract/core/global.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,8 +29,8 @@ class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
           child: Row(
             children: [
               Text(
-                "${addPadding(DataStorage.userData.secondsActive ~/ (60 * 60), 2)}"
-                    ":${addPadding(DataStorage.userData.secondsActive ~/ 60, 2)}",
+                "${addPadding(Global.ds.userData.secondsActive ~/ (60 * 60), 2)}"
+                    ":${addPadding(Global.ds.userData.secondsActive ~/ 60, 2)}",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,

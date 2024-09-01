@@ -5,6 +5,7 @@ import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/global.dart';
 import '../../structure/util/string_to_pedestrian_status.dart';
@@ -19,20 +20,11 @@ class StepCounter extends StatefulWidget {
 class _StepCounterState extends State<StepCounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
-  String? _displayedText;
-
-  @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
-    _displayedText = DataStorage.userData.steps.toString();
   }
 
   void initPlatformState() {
@@ -42,23 +34,13 @@ class _StepCounterState extends State<StepCounter> {
         .onError(onPedestrianStatusError);
 
     _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(onStepCount).onError(onStepCountError);
+    _stepCountStream.listen(onStepCount);
 
     if (!mounted) return;
   }
 
   void onStepCount(StepCount event) {
-    DataStorage.userData.steps += 1;
-
-    setState(() {
-      _displayedText = DataStorage.userData.steps.toString();
-    });
-  }
-
-  void onStepCountError(error) {
-    // setState(() {
-    //   _displayedText = "Error";
-    // });
+    Global.ds.addStep();
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
@@ -73,7 +55,7 @@ class _StepCounterState extends State<StepCounter> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-      child: Text(_displayedText!,
+      child: Text(context.watch<DataStorage>().userData.steps.toString(),
         style: TextStyle(
           color: Colors.black,
           fontSize: 30,

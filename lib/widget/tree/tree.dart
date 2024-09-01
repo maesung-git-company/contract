@@ -1,6 +1,9 @@
+
 import 'package:contract/core/config.dart';
 import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/global.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class Tree extends StatefulWidget {
   const Tree({super.key});
@@ -11,31 +14,27 @@ class Tree extends StatefulWidget {
 
 class _TreeState extends State<Tree> {
   @override
-  void initState() {
-    DataStorage.userData.addListener(this, () {
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.fromLTRB(50, 20, 50, 20),
-        width: double.infinity,
-        child: Image(
-          image: getTreeImgByProgress(),
-          fit: BoxFit.cover,
-        ),
-      ),
+    return Consumer<DataStorage>(
+      builder: (_, provider, __) {
+        return Center(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(50, 20, 50, 20),
+            width: double.infinity,
+            child: Image(
+              image: getTreeImgByProgress(),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      }
     );
   }
 }
 
 
 AssetImage getTreeImgByProgress() {
-  double progress = DataStorage.userData.steps % Config.stepRequiredPerTree
+  double progress = Global.ds.userData.steps % Config.stepRequiredPerTree
       / Config.stepRequiredPerTree;
 
   String path = [

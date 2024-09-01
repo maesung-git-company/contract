@@ -1,7 +1,9 @@
 // ignore: unused_import
 import 'dart:math';
 
+// ignore: unused_import
 import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/global.dart';
 import 'package:contract/core/manager/s_pref_manager.dart';
 import 'package:contract/widget/main_app/main_app.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    bool success = await DataStorage.tryInitUserData(userId);
+    bool success = await Global.ds.tryInitUserData(userId);
     if (success) {
       onLoginSuccess();
     }
@@ -47,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   onLoginSuccess() {
-    SPrefManager.saveUserData(DataStorage.userData);
+    SPrefManager.saveUserData(Global.ds.userData);
 
     Navigator.pushReplacement(
       context,

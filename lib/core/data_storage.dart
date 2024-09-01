@@ -3,24 +3,25 @@ import 'dart:math';
 import 'package:contract/structure/class/class_data.dart';
 import 'package:contract/structure/class/school_data.dart';
 import 'package:contract/structure/class/user_data.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'global.dart';
 
-class DataStorage {
-  static late UserData userData;
-  static ClassData? classData;
-  static SchoolData? schoolData;
+class DataStorage with ChangeNotifier {
+  late UserData userData;
+  ClassData? classData;
+  SchoolData? schoolData;
 
-  static List<UserData>? classmatesDataSortedBySteps;
+  List<UserData>? classmatesDataSortedBySteps;
 
-  static final Map<Data, bool> updating = {
+  final Map<Data, bool> updating = {
     Data.userData: false,
     Data.classData: false,
     Data.schoolData: false,
     Data.classmatesDataSortedBySteps: false,
   };
 
-  static Future<bool> tryUpdateUserData() async {
+  Future<bool> tryUpdateUserData() async {
     if (updating[Data.userData]!) return false;
     updating[Data.userData] = true;
 
@@ -28,6 +29,7 @@ class DataStorage {
       final UserData updatedUserData = await Global.serverManager.retrieveUserData(userData.id);
       userData.steps = max(userData.steps, updatedUserData.steps);
       userData.secondsActive = max(userData.secondsActive, updatedUserData.secondsActive);
+      notifyListeners();
       return true;
     }
     catch (e) {
@@ -38,7 +40,7 @@ class DataStorage {
     }
   }
 
-  static Future<bool> tryUpdateClassData({bool upload = false}) async {
+  Future<bool> tryUpdateClassData({bool upload = false}) async {
     if (updating[Data.classData]!) return false;
     updating[Data.classData] = true;
 
@@ -56,12 +58,14 @@ class DataStorage {
       // apply db data to local
       if (classData == null) {
         classData = updatedClassData;
+        notifyListeners();
         return true;
       }
 
       classData!.latestSumOfSteps = max(classData!.latestSumOfSteps, updatedClassData.latestSumOfSteps);
       classData!.latestSumWhen = now.isAfter(updatedClassData.latestSumWhen) ? now : updatedClassData.latestSumWhen;
 
+      notifyListeners();
       return true;
     }
     catch (e) {
@@ -72,18 +76,18 @@ class DataStorage {
     }
   }
 
-  static Future<bool> tryUpdateClassmatesDataSortedBySteps() async {
+  Future<bool> tryUpdateClassmatesDataSortedBySteps() async {
     if (updating[Data.classmatesDataSortedBySteps]!) return false;
     updating[Data.classmatesDataSortedBySteps] = true;
 
     try {
       final sm = Global.serverManager;
 
-      if (DataStorage.classData == null) {
+      if (classData == null) {
         await tryUpdateClassData();
       }
 
-      if (DataStorage.classData == null) {
+      if (classData == null) {
         return false;
       }
 
@@ -94,6 +98,7 @@ class DataStorage {
 
       classmatesDataSortedBySteps = res;
 
+      notifyListeners();
       return true;
     }
     catch (e) {
@@ -104,9 +109,9 @@ class DataStorage {
     }
   }
 
-  static Future<bool> tryUploadUserData() async {
+  Future<bool> tryUploadUserData() async {
     try {
-      await Global.serverManager.uploadUserData(DataStorage.userData);
+      await Global.serverManager.uploadUserData(userData);
       return true;
     }
     catch (e) {
@@ -114,9 +119,9 @@ class DataStorage {
     }
   }
 
-  static Future<bool> tryUploadClassData() async {
+  Future<bool> tryUploadClassData() async {
     try {
-      await Global.serverManager.uploadClassData(DataStorage.classData!);
+      await Global.serverManager.uploadClassData(classData!);
       return true;
     }
     catch (e) {
@@ -124,19 +129,19 @@ class DataStorage {
     }
   }
 
-  static Future<void> tryTotalUpdate() async { // todo 리로드 시 위젯도 업데이트
+  Future<void> tryTotalUpdate() async {
     tryUpdateUserData();
     tryUpdateClassData(upload: true);
     tryUpdateClassmatesDataSortedBySteps();
   }
 
-  static void totalDelete() {
+  void totalDelete() {
     classData = null;
     classmatesDataSortedBySteps = null;
     schoolData = null;
   }
 
-  static Future<bool> tryInitUserData(int id) async {
+  Future<bool> tryInitUserData(int id) async {
     try {
       userData = await Global.serverManager.retrieveUserData(id);
       return true;
@@ -144,6 +149,16 @@ class DataStorage {
     catch (e) {
       return false;
     }
+  }
+
+  void addStep() {
+    userData.steps++;
+    notifyListeners();
+  }
+
+  void addActiveTime() {
+    userData.secondsActive++;
+    notifyListeners();
   }
 }
 

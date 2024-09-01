@@ -1,9 +1,10 @@
-import 'package:contract/core/data_storage.dart';
 // ignore: unused_import
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class LeaderBoardRanking extends StatefulWidget {
@@ -23,16 +24,14 @@ class _LeaderBoardRankingState extends State<LeaderBoardRanking> {
   @override
   Widget build(BuildContext context) {
     final List<RankRow> rankRows = [
-      RankRow(head: "1st", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 0)),
-      RankRow(head: "2nd", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 1)),
-      RankRow(head: "3rd", id: extractIdSafely(DataStorage.classmatesDataSortedBySteps, 2))
+      RankRow(head: "1st", id: extractIdSafely(Global.ds.classmatesDataSortedBySteps, 0)),
+      RankRow(head: "2nd", id: extractIdSafely(Global.ds.classmatesDataSortedBySteps, 1)),
+      RankRow(head: "3rd", id: extractIdSafely(Global.ds.classmatesDataSortedBySteps, 2))
     ];
 
     return SkeletonSafe(
-      inspectList: [DataStorage.classmatesDataSortedBySteps],
-      onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
-      reloadAfterMillisecond: 1000,
-      reloadCallback: () { setState(() {}); },
+      inspectList: [context.watch<DataStorage>().classmatesDataSortedBySteps],
+      onDisabled: Global.ds.tryUpdateClassmatesDataSortedBySteps,
       child: SizedBox(
         height: 190,
         child: Column(

@@ -1,5 +1,4 @@
 
-import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/manager/s_pref_manager.dart';
 import 'package:contract/structure/class/user_data.dart';
 import 'package:contract/widget/main_app/main_app.dart';
@@ -44,8 +43,8 @@ Future<void> attemptLogin() async {
   if (savedUserData == null) return;
   userLoggedIn = true;
 
-  DataStorage.userData = savedUserData;
-  await DataStorage.tryUpdateUserData();
+  Global.ds.userData = savedUserData;
+  await Global.ds.tryUpdateUserData();
 }
 
 class _ContractState extends State<Contract> {

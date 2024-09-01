@@ -9,11 +9,13 @@
 
 import 'package:contract/core/manager/s_pref_manager.dart';
 
+// ignore: unused_import
 import 'data_storage.dart';
+import 'global.dart';
 
 class Utility {
   static void logOut() {
     SPrefManager.deleteSavedUserData();
-    DataStorage.totalDelete();
+    Global.ds.totalDelete();
   }
 }

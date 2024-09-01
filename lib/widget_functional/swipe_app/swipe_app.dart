@@ -1,3 +1,4 @@
+
 import 'package:contract/widget_functional/swipeable_horizontal/swipeable_horizontal.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -24,13 +25,9 @@ class _TestPageState extends State<SwipeApp> {
     currentPageIndex = widget.initialPageIndex;
   }
 
-  void updateView() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SwipeableHorizontal( // todo perhaps swipe animation?
+    return SwipeableHorizontal(
       sensitivity: 8.0,
       onSwipeLeft: () => {
         setState(() {

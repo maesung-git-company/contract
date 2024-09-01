@@ -2,7 +2,7 @@ import 'package:contract/widget/home_page_app_bar/home_page_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SchoolStatPage extends StatefulWidget { // todo
+class SchoolStatPage extends StatefulWidget {
   const SchoolStatPage({super.key});
 
   @override

@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:contract/core/config.dart';
-import 'package:contract/core/data_storage.dart';
 // ignore: unused_import
 import 'package:contract/core/global.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class _ProgressBarState extends State<ProgressBar> {
 
   @override
   Widget build(BuildContext context) {
-    progress = min(DataStorage.userData.steps / Config.stepRequiredPerTree, 1.0);
+    progress = min(Global.ds.userData.steps / Config.stepRequiredPerTree, 1.0);
 
     return Skeleton.shade(
       child: Container(

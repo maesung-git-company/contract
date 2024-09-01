@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -13,8 +12,6 @@ class SkeletonSafe extends StatefulWidget {
 
   final Widget? pseudoLayout;
   final VoidCallback? onDisabled;
-  final int? reloadAfterMillisecond;
-  final VoidCallback? reloadCallback;
 
   SkeletonSafe({
     super.key,
@@ -22,15 +19,9 @@ class SkeletonSafe extends StatefulWidget {
     required this.inspectList,
 
     this.onDisabled,
-    this.reloadAfterMillisecond,
-    this.reloadCallback,
 
     this.pseudoLayout,
-  }) {
-    if ((reloadAfterMillisecond == null) ^ (reloadAfterMillisecond == null)) { // if one is null while the other isn't
-      throw ArgumentError("both reloadAfterMillisecond and reloadAfterMillisecond should be provided!");
-    }
-  }
+  });
 
   @override
   State<SkeletonSafe> createState() => _SkeletonSafeState();
@@ -43,13 +34,6 @@ class _SkeletonSafeState extends State<SkeletonSafe> {
 
     if (skeletonizerEnabled && widget.onDisabled != null) {
       widget.onDisabled!();
-    }
-
-    if (skeletonizerEnabled && widget.reloadAfterMillisecond != null) {
-      Timer(
-          Duration(milliseconds: widget.reloadAfterMillisecond!),
-          widget.reloadCallback!
-      );
     }
 
     Widget child = skeletonizerEnabled && (widget.pseudoLayout != null)

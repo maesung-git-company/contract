@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
 import 'package:contract/page/class_stat_page/class_stat_page.dart';
 import 'package:contract/page/home_page/home_page.dart';
-import 'package:contract/page/school_stat_page/school_stat_page.dart';
 import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:contract/widget_functional/swipe_app/swipe_app.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 
 class MainApp extends StatefulWidget {
@@ -33,11 +32,11 @@ class _MainAppState extends State<MainApp> {
 
       if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
 
-      DataStorage.userData.secondsActive += 1;
+      Global.ds.addActiveTime();
     });
 
     userDataSyncer = Timer.periodic(Duration(seconds: 60 * 5), (timer) {
-      DataStorage.tryTotalUpdate();
+      Global.ds.tryTotalUpdate();
     });
   }
 
@@ -50,13 +49,16 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return SwipeApp(
-      pages: [
-        HomePage(),
-        ClassStatPage(),
-        // SchoolStatPage(),
-      ],
-      initialPageIndex: 0,
+    return ListenableProvider(
+      create: (context) => Global.ds,
+      child: SwipeApp(
+        pages: [
+          HomePage(),
+          ClassStatPage(),
+          // SchoolStatPage(),
+        ],
+        initialPageIndex: 0,
+      ),
     );
   }
 }

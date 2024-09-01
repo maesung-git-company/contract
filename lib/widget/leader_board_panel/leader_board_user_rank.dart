@@ -1,8 +1,10 @@
 import 'package:contract/core/data_storage.dart';
+import 'package:contract/core/global.dart';
 import 'package:contract/structure/util/nullObjSafe.dart';
 import 'package:contract/widget_functional/skeleton_safe/skeleton_safe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class LeaderBoardUserRank extends StatefulWidget {
@@ -21,14 +23,12 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
 
   @override
   Widget build(BuildContext context) {
-    final int ranking = (nullObjSafe(DataStorage.classmatesDataSortedBySteps)
-        .indexWhere((user) => user.id == DataStorage.userData.id) + 1);
+    final int ranking = (nullObjSafe(Global.ds.classmatesDataSortedBySteps)
+        .indexWhere((user) => user.id == Global.ds.userData.id) + 1);
 
     return SkeletonSafe(
-      inspectList: [DataStorage.classmatesDataSortedBySteps],
-      onDisabled: DataStorage.tryUpdateClassmatesDataSortedBySteps,
-      reloadAfterMillisecond: 1000,
-      reloadCallback: () { setState(() {}); },
+      inspectList: [context.watch<DataStorage>().classmatesDataSortedBySteps],
+      onDisabled: Global.ds.tryUpdateClassmatesDataSortedBySteps,
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
