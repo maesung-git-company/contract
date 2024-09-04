@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.contract"
+    namespace "com.github.maesung-git-company.contract"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
