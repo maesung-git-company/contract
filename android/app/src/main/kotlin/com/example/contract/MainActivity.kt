@@ -1,4 +1,4 @@
-package com.example.contract
+package com.github.maesung_git_company.greenwalking
 
 import io.flutter.embedding.android.FlutterActivity
 
