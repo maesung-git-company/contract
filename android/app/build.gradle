@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.github.maesung_git_company"
+    namespace "com.github.maesung_git_company.greenwalking"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
