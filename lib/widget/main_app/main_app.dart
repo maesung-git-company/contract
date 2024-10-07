@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
+import 'package:contract/core/manager/s_pref_manager.dart';
 import 'package:contract/page/class_stat_page/class_stat_page.dart';
 import 'package:contract/page/home_page/home_page.dart';
+import 'package:contract/page/school_stat_page/school_stat_page.dart';
 import 'package:contract/structure/enum/custom_pedestrian_status.dart';
 import 'package:contract/widget_functional/swipe_app/swipe_app.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +21,8 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   late Timer activityTracker;
-  late Timer userDataSyncer;
+  late Timer cacheSyncer;
+  late Timer userDataUploader;
 
   @override
   void initState() {
@@ -35,15 +39,21 @@ class _MainAppState extends State<MainApp> {
       Global.ds.addActiveTime();
     });
 
-    userDataSyncer = Timer.periodic(Duration(seconds: 60 * 5), (timer) {
-      Global.ds.tryTotalUpdate();
+    cacheSyncer = Timer.periodic(Duration(seconds: 60 * 2), (timer) {
+      Global.ds.tryTotalSyncExceptUser();
+    });
+
+    userDataUploader = Timer.periodic(Duration(seconds: 20), (timer) {
+      Global.ds.tryUploadUserData();
+      SPrefManager.saveUserData(Global.ds.userData);
     });
   }
 
   @override
   void dispose() {
     activityTracker.cancel();
-    userDataSyncer.cancel();
+    cacheSyncer.cancel();
+    userDataUploader.cancel();
     super.dispose();
   }
 
@@ -55,7 +65,7 @@ class _MainAppState extends State<MainApp> {
         pages: [
           HomePage(),
           ClassStatPage(),
-          // SchoolStatPage(),
+          SchoolStatPage(),
         ],
         initialPageIndex: 0,
       ),

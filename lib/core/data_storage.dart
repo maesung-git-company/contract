@@ -40,7 +40,7 @@ class DataStorage with ChangeNotifier {
     }
   }
 
-  Future<bool> tryUpdateClassData({bool upload = false}) async {
+  Future<bool> tryUpdateClassData() async {
     if (updating[Data.classData]!) return false;
     updating[Data.classData] = true;
 
@@ -52,7 +52,6 @@ class DataStorage with ChangeNotifier {
       if (now.difference(updatedClassData.latestSumWhen).inMinutes > 5) {
         updatedClassData.latestSumOfSteps = await getTotalStepsOfClass(updatedClassData);
         updatedClassData.latestSumWhen = now;
-        if (upload) tryUploadClassData();
       }
 
       // apply db data to local
@@ -129,9 +128,10 @@ class DataStorage with ChangeNotifier {
     }
   }
 
-  Future<void> tryTotalUpdate() async {
-    tryUpdateUserData();
-    tryUpdateClassData(upload: true);
+  Future<void> tryTotalSyncExceptUser() async {
+    // tryUpdateUserData();
+    tryUpdateClassData();
+    tryUploadClassData();
     tryUpdateClassmatesDataSortedBySteps();
   }
 

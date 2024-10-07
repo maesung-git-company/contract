@@ -110,8 +110,8 @@ class ServerManagerSupabase implements ServerManagerI {
       .update({
         'latest_sum_of_steps': max(classData.latestSumOfSteps, serverClassData.latestSumOfSteps),
         'latest_sum_when': classData.latestSumWhen.isAfter(serverClassData.latestSumWhen)
-          ? classData.latestSumWhen
-          : serverClassData.latestSumWhen
+          ? classData.latestSumWhen.toIso8601String()
+          : serverClassData.latestSumWhen.toIso8601String()
       })
       .eq('id', classData.uuid);
   }
@@ -162,8 +162,8 @@ class ServerManagerSupabase implements ServerManagerI {
       .update({
         'latest_sum_of_steps': max(schoolData.latestSumOfSteps, serverSchoolData.latestSumOfSteps),
         'latest_sum_when': schoolData.latestSumWhen.isAfter(serverSchoolData.latestSumWhen)
-          ? schoolData.latestSumWhen
-          : serverSchoolData.latestSumWhen
+          ? schoolData.latestSumWhen.toIso8601String()
+          : serverSchoolData.latestSumWhen.toIso8601String()
       })
       .eq('id', schoolData.uuid);
   }
