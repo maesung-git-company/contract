@@ -37,7 +37,7 @@ class _WorkoutStopwatchPanelState extends State<WorkoutStopwatchPanel> {
                 ),
               ),
               Text(
-                "  Workouts this day",
+                "  활동한 시간",
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.grey.shade600,

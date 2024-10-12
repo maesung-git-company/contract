@@ -14,7 +14,7 @@ class _DenominatorState extends State<Denominator> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-        child: Text('/${NumberFormat('#,###').format(Config.stepRequiredPerTree)} steps',
+        child: Text('/${NumberFormat('#,###').format(Config.stepRequiredPerTree)} 걸음',
           style: TextStyle(
               color: Colors.grey.shade600,
               fontSize: 17,

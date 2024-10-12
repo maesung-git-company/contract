@@ -15,6 +15,10 @@ class LeaderBoardUserRank extends StatefulWidget {
 }
 
 class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
+  final _smallGrayStyle = TextStyle(
+      fontSize: 16,
+      color: Colors.grey.shade600,
+    );
   @override
   void setState(VoidCallback fn) {
     if (!mounted) return;
@@ -38,7 +42,7 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Leader Board",
+                  "걸음 순위표",
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
@@ -51,11 +55,8 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "in your class",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade600,
-                  ),
+                  "당신의 반에서",
+                  style: _smallGrayStyle,
                 ),
               ),
             ),
@@ -66,11 +67,8 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
                 child: Row(
                   children: [
                     Text(
-                      "you are on",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade600,
-                      ),
+                      "당신은 ",
+                      style: _smallGrayStyle,
                     ),
                     SizedBox(
                       width: 5,
@@ -84,12 +82,12 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
                       width: 5,
                     ),
                     Text(
-                      getOrderPostfix(ranking),
+                      "등 입니다",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey.shade600,
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -101,7 +99,7 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
   }
 }
 
-String getOrderPostfix(int ranking) {
-  if (ranking <= 3) return ["?", "st", "nd", "rd"][ranking];
-  return "th";
-}
+// String getOrderPostfix(int ranking) {
+//   if (ranking <= 3) return ["?", "st", "nd", "rd"][ranking];
+//   return "th";
+// }
