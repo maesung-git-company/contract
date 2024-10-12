@@ -151,8 +151,8 @@ class DataStorage with ChangeNotifier {
     }
   }
 
-  void addStep() {
-    userData.steps++;
+  void addStep({int n = 1}) {
+    userData.steps += n;
     notifyListeners();
   }
 

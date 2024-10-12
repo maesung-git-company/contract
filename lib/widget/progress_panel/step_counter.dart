@@ -18,39 +18,6 @@ class StepCounter extends StatefulWidget {
 }
 
 class _StepCounterState extends State<StepCounter> {
-  late Stream<StepCount> _stepCountStream;
-  late Stream<PedestrianStatus> _pedestrianStatusStream;
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  void initPlatformState() {
-    _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
-    _pedestrianStatusStream
-        .listen(onPedestrianStatusChanged)
-        .onError(onPedestrianStatusError);
-
-    _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream.listen(onStepCount);
-
-    if (!mounted) return;
-  }
-
-  void onStepCount(StepCount event) {
-    Global.ds.addStep();
-  }
-
-  void onPedestrianStatusChanged(PedestrianStatus event) {
-    Global.appStatus.pedestrianStatus = string2pedestrianStatus(event.status);
-  }
-
-  void onPedestrianStatusError(error) {
-    Global.appStatus.pedestrianStatus = CustomPedestrianStatus.unknown;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
