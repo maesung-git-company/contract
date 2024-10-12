@@ -19,6 +19,7 @@ class _LeaderBoardUserRankState extends State<LeaderBoardUserRank> {
       fontSize: 16,
       color: Colors.grey.shade600,
     );
+
   @override
   void setState(VoidCallback fn) {
     if (!mounted) return;

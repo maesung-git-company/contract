@@ -69,7 +69,7 @@ class ServerManagerSupabase implements ServerManagerI {
     final rawData = await supabase
         .from('class')
         .select()
-        .eq('id', uuid)
+        .eq('uuid', uuid)
         .single();
 
     return rawData;
@@ -113,7 +113,7 @@ class ServerManagerSupabase implements ServerManagerI {
           ? classData.latestSumWhen.toIso8601String()
           : serverClassData.latestSumWhen.toIso8601String()
       })
-      .eq('id', classData.uuid);
+      .eq('uuid', classData.uuid);
   }
 
   @override
