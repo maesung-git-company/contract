@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:contract/core/config.dart';
 import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
 import 'package:contract/core/manager/s_pref_manager.dart';
@@ -31,7 +32,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   void initTimer() {
-    activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
+    activityTracker = Timer.periodic(Duration(seconds: Config.activityTrackerDelayS), (timer) {
       final as = Global.appStatus;
 
       if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
@@ -39,11 +40,11 @@ class _MainAppState extends State<MainApp> {
       Global.ds.addActiveTime();
     });
 
-    cacheSyncer = Timer.periodic(Duration(seconds: 60 * 2), (timer) {
+    cacheSyncer = Timer.periodic(Duration(seconds: Config.cacheSyncerDelayS), (timer) {
       Global.ds.tryTotalSyncExceptUser();
     });
 
-    userDataUploader = Timer.periodic(Duration(seconds: 20), (timer) {
+    userDataUploader = Timer.periodic(Duration(seconds: Config.userDataUploaderDelayS), (timer) {
       Global.ds.tryUploadUserData();
       SPrefManager.saveUserData(Global.ds.userData);
     });
