@@ -84,7 +84,8 @@ class ServerManagerSupabase implements ServerManagerI {
       name: rawData['name'],
       usersId: List<int>.from(rawData['users_id'] as List),
       latestSumOfSteps: rawData['latest_sum_of_steps'],
-      latestSumWhen: DateTime.parse(rawData['latest_sum_when'])
+      latestSumWhen: DateTime.parse(rawData['latest_sum_when']),
+      belongSchoolUuid: rawData['belong_school_uuid']
     );
 
     return res;

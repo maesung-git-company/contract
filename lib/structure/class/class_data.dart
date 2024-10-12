@@ -4,6 +4,7 @@ class ClassData with ChangeNotifier {
   late final String uuid;
   late final String name;
   late final List<int> usersId;
+  late final String belongSchoolUuid;
   late int latestSumOfSteps;
   late DateTime latestSumWhen;
 
@@ -13,5 +14,6 @@ class ClassData with ChangeNotifier {
     required this.usersId,
     required this.latestSumOfSteps,
     required this.latestSumWhen,
+    required this.belongSchoolUuid
   });
 }
