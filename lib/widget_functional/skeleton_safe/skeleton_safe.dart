@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -12,6 +14,7 @@ class SkeletonSafe extends StatefulWidget {
 
   final Widget? pseudoLayout;
   final VoidCallback? onDisabled;
+  final int? retryAfterS;
 
   SkeletonSafe({
     super.key,
@@ -19,6 +22,7 @@ class SkeletonSafe extends StatefulWidget {
     required this.inspectList,
 
     this.onDisabled,
+    this.retryAfterS,
 
     this.pseudoLayout,
   });
@@ -28,12 +32,24 @@ class SkeletonSafe extends StatefulWidget {
 }
 
 class _SkeletonSafeState extends State<SkeletonSafe> {
+  Timer? onDisableRetryer;
+
   @override
   Widget build(BuildContext context) {
     bool skeletonizerEnabled = widget.inspectList.contains(null);
 
     if (skeletonizerEnabled && widget.onDisabled != null) {
       widget.onDisabled!();
+      if (widget.retryAfterS != null && onDisableRetryer == null) {
+        onDisableRetryer = Timer.periodic(
+            Duration(seconds: widget.retryAfterS!),
+            (Timer timer) { print(widget.child); widget.onDisabled!(); }
+        );
+      }
+    }
+
+    if (!skeletonizerEnabled) {
+      onDisableRetryer?.cancel();
     }
 
     Widget child = skeletonizerEnabled && (widget.pseudoLayout != null)
@@ -44,6 +60,12 @@ class _SkeletonSafeState extends State<SkeletonSafe> {
         enabled: skeletonizerEnabled,
         child: child
     );
+  }
+
+  @override
+  void dispose() {
+    onDisableRetryer?.cancel();
+    super.dispose();
   }
 }
 
