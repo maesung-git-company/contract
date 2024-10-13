@@ -28,7 +28,8 @@ T nullObjSafe<T>(T? value) {
           000000,
         ],
         latestSumOfSteps: 1234,
-        latestSumWhen: DateTime.now()
+        latestSumWhen: DateTime.now(),
+        belongSchoolUuid: ''
     ) as T;
   }
 

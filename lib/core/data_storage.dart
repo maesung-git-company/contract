@@ -13,12 +13,14 @@ class DataStorage with ChangeNotifier {
   SchoolData? schoolData;
 
   List<UserData>? classmatesDataSortedBySteps;
+  List<ClassData>? wholeClassesSortedBySteps;
 
   final Map<Data, bool> updating = {
     Data.userData: false,
     Data.classData: false,
     Data.schoolData: false,
     Data.classmatesDataSortedBySteps: false,
+    Data.wholeClassesSortedBySteps: false,
   };
 
   Future<bool> tryUpdateUserData() async {
@@ -54,7 +56,7 @@ class DataStorage with ChangeNotifier {
         updatedClassData.latestSumWhen = now;
       }
 
-      // apply db data to local
+      // apply db data to cache
       if (classData == null) {
         classData = updatedClassData;
         notifyListeners();
@@ -75,6 +77,43 @@ class DataStorage with ChangeNotifier {
     }
   }
 
+  Future<bool> tryUpdateSchoolData() async {
+    if (updating[Data.schoolData]!) return false;
+    updating[Data.schoolData] = true;
+
+    try {
+      if (classData == null) await tryUpdateClassData();
+      final SchoolData updatedSchoolData = await Global.serverManager.retrieveSchoolData(classData!.belongSchoolUuid);
+
+      DateTime now = DateTime.now();
+
+      if (now.difference(updatedSchoolData.latestSumWhen).inMinutes > 5) {
+        tryUpdateWholeClassesSortedBySteps();
+        updatedSchoolData.latestSumOfSteps = await getTotalStepsOfClasses(wholeClassesSortedBySteps!);
+        updatedSchoolData.latestSumWhen = now;
+      }
+
+      // apply db data to cache
+      if (schoolData == null) {
+        schoolData = updatedSchoolData;
+        notifyListeners();
+        return true;
+      }
+
+      schoolData!.latestSumOfSteps = max(schoolData!.latestSumOfSteps, updatedSchoolData.latestSumOfSteps);
+      schoolData!.latestSumWhen = now.isAfter(updatedSchoolData.latestSumWhen) ? now : updatedSchoolData.latestSumWhen;
+
+      notifyListeners();
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+    finally {
+      updating[Data.schoolData] = false;
+    }
+  }
+
   Future<bool> tryUpdateClassmatesDataSortedBySteps() async {
     if (updating[Data.classmatesDataSortedBySteps]!) return false;
     updating[Data.classmatesDataSortedBySteps] = true;
@@ -82,16 +121,10 @@ class DataStorage with ChangeNotifier {
     try {
       final sm = Global.serverManager;
 
-      if (classData == null) {
-        await tryUpdateClassData();
-      }
-
-      if (classData == null) {
-        return false;
-      }
+      if (classData == null) await tryUpdateClassData();
 
       List<UserData> res =
-      await sm.getUserDatasOfClass(classData!);
+        await sm.getUserDatasOfClass(classData!);
 
       res.sort((a, b) => b.steps.compareTo(a.steps));
 
@@ -105,6 +138,33 @@ class DataStorage with ChangeNotifier {
     }
     finally {
       updating[Data.classmatesDataSortedBySteps] = false;
+    }
+  }
+
+  Future<bool> tryUpdateWholeClassesSortedBySteps() async {
+    if (updating[Data.wholeClassesSortedBySteps]!) return false;
+    updating[Data.wholeClassesSortedBySteps] = true;
+
+    try {
+      final sm = Global.serverManager;
+
+      if (schoolData == null) await tryUpdateSchoolData();
+
+      List<ClassData> res =
+        await sm.getClassDatasOfSchool(schoolData!);
+
+      res.sort((a, b) => b.latestSumOfSteps.compareTo(a.latestSumOfSteps));
+
+      wholeClassesSortedBySteps = res;
+
+      notifyListeners();
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+    finally {
+      updating[Data.wholeClassesSortedBySteps] = false;
     }
   }
 
@@ -126,6 +186,27 @@ class DataStorage with ChangeNotifier {
     catch (e) {
       return false;
     }
+  }
+
+  Future<bool> tryUploadSchoolData() async {
+    try {
+      await Global.serverManager.uploadSchoolData(schoolData!);
+      return true;
+    }
+    catch (e) {
+      return false;
+    }
+  }
+
+  Future<int> getTotalStepsOfClass(ClassData classData) async {
+    final sm = Global.serverManager;
+    int sum = 0;
+
+    List<UserData> userDatas = await sm.getUserDatasOfClass(classData);
+
+    for (final ud in userDatas) { sum += ud.steps; }
+
+    return sum;
   }
 
   Future<void> tryTotalSyncExceptUser() async {
@@ -162,13 +243,11 @@ class DataStorage with ChangeNotifier {
   }
 }
 
-Future<int> getTotalStepsOfClass(ClassData classData) async {
-  final sm = Global.serverManager;
+
+Future<int> getTotalStepsOfClasses(List<ClassData> classDatas) async {
   int sum = 0;
 
-  List<UserData> userDatas = await sm.getUserDatasOfClass(classData);
-
-  for (final ud in userDatas) { sum += ud.steps; }
+  for (final cd in classDatas) { sum += cd.latestSumOfSteps; }
 
   return sum;
 }
@@ -178,4 +257,5 @@ enum Data {
   classData,
   schoolData,
   classmatesDataSortedBySteps,
+  wholeClassesSortedBySteps,
 }

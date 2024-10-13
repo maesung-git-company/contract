@@ -19,7 +19,7 @@ Future<void> main() async {
   await overallInit();
   await attemptLogin();
 
-  runApp(Contract());
+  runApp(MaesungGreenWalking());
 }
 
 Future<void> overallInit() async {
@@ -31,11 +31,11 @@ Future<void> grantPermission() async {
   await Permission.activityRecognition.request();
 }
 
-class Contract extends StatefulWidget {
-  const Contract({super.key});
+class MaesungGreenWalking extends StatefulWidget {
+  const MaesungGreenWalking({super.key});
 
   @override
-  State<Contract> createState() => _ContractState();
+  State<MaesungGreenWalking> createState() => _MaesungGreenWalkingState();
 }
 
 Future<void> attemptLogin() async {
@@ -47,7 +47,7 @@ Future<void> attemptLogin() async {
   await Global.ds.tryUpdateUserData();
 }
 
-class _ContractState extends State<Contract> {
+class _MaesungGreenWalkingState extends State<MaesungGreenWalking> {
   @override
   Widget build(BuildContext context) {
     late Widget page;
