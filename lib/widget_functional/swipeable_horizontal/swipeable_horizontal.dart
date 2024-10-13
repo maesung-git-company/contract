@@ -29,7 +29,7 @@ class _SwipeableHorizontalState extends State<SwipeableHorizontal> {
     return GestureDetector(
       onPanUpdate: (details) {
         timer?.cancel();
-        timer = Timer(Duration(milliseconds: 10), () { enabled = true; });
+        timer = Timer(Duration(milliseconds: 50), () { enabled = true; });
 
         if (!enabled) return;
 
