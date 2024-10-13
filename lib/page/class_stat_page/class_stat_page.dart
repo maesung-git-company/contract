@@ -28,7 +28,6 @@ class _ClassStatPageState extends State<ClassStatPage> {
   @override
   Widget build(BuildContext context) {
     final List<ClassStatRankRow> classStatRankRows = [];
-
     final cmatesDatas = Global.ds.classmatesDataSortedBySteps;
 
     if (cmatesDatas != null) {
