@@ -56,6 +56,7 @@ class _MainAppState extends State<MainApp> {
       Global.ds.addStep();
     }
     Global.ds.addStep(n: (event.steps - _lastSteps));
+    _lastSteps = event.steps;
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
