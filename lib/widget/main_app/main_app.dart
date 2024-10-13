@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:contract/core/config.dart';
-import 'package:contract/core/data_storage.dart';
 import 'package:contract/core/global.dart';
 import 'package:contract/core/manager/s_pref_manager.dart';
 import 'package:contract/page/class_stat_page/class_stat_page.dart';

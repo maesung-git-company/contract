@@ -50,7 +50,7 @@ class DataStorage with ChangeNotifier {
       final ClassData updatedClassData = await Global.serverManager.retrieveClassData(userData.belongClassId);
 
       DateTime now = DateTime.now();
-
+      // todo clear
       if (now.difference(updatedClassData.latestSumWhen).inMinutes > 5) {
         updatedClassData.latestSumOfSteps = await getTotalStepsOfClass(updatedClassData);
         updatedClassData.latestSumWhen = now;
@@ -83,15 +83,10 @@ class DataStorage with ChangeNotifier {
 
     try {
       if (classData == null) await tryUpdateClassData();
+      // if the value is updating, they return instantly-- causing an error
       final SchoolData updatedSchoolData = await Global.serverManager.retrieveSchoolData(classData!.belongSchoolUuid);
 
       DateTime now = DateTime.now();
-
-      if (now.difference(updatedSchoolData.latestSumWhen).inMinutes > 5) {
-        tryUpdateWholeClassesSortedBySteps();
-        updatedSchoolData.latestSumOfSteps = await getTotalStepsOfClasses(wholeClassesSortedBySteps!);
-        updatedSchoolData.latestSumWhen = now;
-      }
 
       // apply db data to cache
       if (schoolData == null) {
@@ -190,6 +185,15 @@ class DataStorage with ChangeNotifier {
 
   Future<bool> tryUploadSchoolData() async {
     try {
+      DateTime now = DateTime.now();
+
+      if (now.difference(schoolData!.latestSumWhen).inMinutes > 5) {
+        tryUpdateWholeClassesSortedBySteps();
+        schoolData!.latestSumOfSteps = await getTotalStepsOfClasses(wholeClassesSortedBySteps!);
+        schoolData!.latestSumWhen = now;
+        notifyListeners();
+      }
+
       await Global.serverManager.uploadSchoolData(schoolData!);
       return true;
     }

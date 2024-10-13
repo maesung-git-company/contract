@@ -135,9 +135,9 @@ class ServerManagerSupabase implements ServerManagerI {
     SchoolData schoolData = SchoolData(
         uuid: rawData['uuid'],
         name: rawData['name'],
-        classesUuid: rawData['classes_uuid'],
+        classesUuid: List<String>.from(rawData['classes_uuid'] as List),
         latestSumOfSteps: rawData['latest_sum_of_steps'],
-        latestSumWhen: rawData['latest_sum_when']
+        latestSumWhen: DateTime.parse(rawData['latest_sum_when'])
     );
 
     return schoolData;
