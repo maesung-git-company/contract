@@ -26,9 +26,6 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: HomePageAppBar(),
-
-        //-----------------------------------------//
-
         body: Container(
           color: Colors.white,
           child: Column(

@@ -68,7 +68,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   void initTimer() {
-    activityTracker = Timer.periodic(Duration(seconds: Config.activityTrackerDelayS), (timer) {
+    activityTracker = Timer.periodic(Duration(seconds: 1), (timer) {
       final as = Global.appStatus;
 
       if (as.pedestrianStatus != CustomPedestrianStatus.walking) return;
