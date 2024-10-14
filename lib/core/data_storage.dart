@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:contract/core/config.dart';
 import 'package:contract/structure/class/class_data.dart';
 import 'package:contract/structure/class/school_data.dart';
 import 'package:contract/structure/class/user_data.dart';
@@ -14,6 +15,8 @@ class DataStorage with ChangeNotifier {
 
   List<UserData>? classmatesDataSortedBySteps;
   List<ClassData>? wholeClassesSortedBySteps;
+
+  DateTime lastTotalUpdateTry = DateTime.now();
 
   final Map<Data, bool> updating = {
     Data.userData: false,
@@ -215,7 +218,12 @@ class DataStorage with ChangeNotifier {
   }
 
   Future<void> tryTotalSyncExceptUser() async {
-    // tryUpdateUserData();
+    if (lastTotalUpdateTry.difference(DateTime.now()).inSeconds.abs()
+        <= Config.totalUpdateDelayS) return;
+    lastTotalUpdateTry = DateTime.now();
+
+    tryUpdateUserData();
+    tryUploadUserData();
     tryUpdateClassData();
     tryUploadClassData();
     tryUpdateSchoolData();
@@ -228,6 +236,7 @@ class DataStorage with ChangeNotifier {
     classData = null;
     classmatesDataSortedBySteps = null;
     schoolData = null;
+    wholeClassesSortedBySteps = null;
   }
 
   Future<bool> tryInitUserData(int id) async {
@@ -247,6 +256,10 @@ class DataStorage with ChangeNotifier {
 
   void addActiveTime() {
     userData.secondsActive++;
+    notifyListeners();
+  }
+
+  void notifyManually() {
     notifyListeners();
   }
 }
