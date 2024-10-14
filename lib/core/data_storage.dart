@@ -50,8 +50,9 @@ class DataStorage with ChangeNotifier {
       final ClassData updatedClassData = await Global.serverManager.retrieveClassData(userData.belongClassId);
 
       DateTime now = DateTime.now();
+
       // todo clear
-      if (now.difference(updatedClassData.latestSumWhen).inMinutes > 5) {
+      if (now.difference(updatedClassData.latestSumWhen).inMinutes.abs() > 5) {
         updatedClassData.latestSumOfSteps = await getTotalStepsOfClass(updatedClassData);
         updatedClassData.latestSumWhen = now;
       }
@@ -187,7 +188,7 @@ class DataStorage with ChangeNotifier {
     try {
       DateTime now = DateTime.now();
 
-      if (now.difference(schoolData!.latestSumWhen).inMinutes > 5) {
+      if (now.difference(schoolData!.latestSumWhen).inMinutes.abs() > 5) {
         tryUpdateWholeClassesSortedBySteps();
         schoolData!.latestSumOfSteps = await getTotalStepsOfClasses(wholeClassesSortedBySteps!);
         schoolData!.latestSumWhen = now;
@@ -217,7 +218,10 @@ class DataStorage with ChangeNotifier {
     // tryUpdateUserData();
     tryUpdateClassData();
     tryUploadClassData();
+    tryUpdateSchoolData();
+    tryUploadSchoolData();
     tryUpdateClassmatesDataSortedBySteps();
+    tryUpdateWholeClassesSortedBySteps();
   }
 
   void totalDelete() {
